@@ -3,32 +3,29 @@
 import { useRouter } from 'next/navigation';
 import { ArticleCard } from '@/components/molecules/ArticleCard';
 import { Text } from '@/components/atoms';
+import type { ArticleMeta } from '@/types/mdx';
 import './Articles.css';
-import { AppRoute } from '@/types/routes';
 
-const ExampleArticleCard = () => {
+interface ArticlesProps {
+  articles: ArticleMeta[];
+}
+
+export const Articles = ({ articles }: ArticlesProps) => {
   const router = useRouter();
 
-  return (
-    <ArticleCard
-      title="Getting Started with Next.js"
-      description="A beginner's guide to Next.js, covering the fundamentals and best practices for building modern web applications."
-      imageUrl="/images/articles/nextjs-guide/easton-press-books.jpg"
-      date="2024-03-14"
-      onClick={() => router.push('/articles/nextjs-guide' as AppRoute)}
-    />
-  );
-};
-
-const articles = [ExampleArticleCard];
-
-export const Articles = () => {
   return (
     <div className="articles-container">
       <Text variant="h1">Articles</Text>
       <div className="articles-grid">
-        {articles.map((Article, index) => (
-          <Article key={index} />
+        {articles.map((article) => (
+          <ArticleCard
+            key={article.slug}
+            title={article.title}
+            description={article.description}
+            imageUrl={article.thumbnail}
+            date={article.date}
+            onClick={() => router.push(`/articles/${article.slug}`)}
+          />
         ))}
       </div>
     </div>

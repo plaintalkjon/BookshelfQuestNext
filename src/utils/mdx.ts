@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import type { ArticleMeta, MDXArticle } from '@/types/mdx';
+import { Image } from '@/components/atoms';
 
 const articlesDirectory = path.join(process.cwd(), 'src/content/articles');
 
@@ -10,13 +11,28 @@ export async function getArticleBySlug(slug: string): Promise<MDXArticle | null>
     const fullPath = path.join(articlesDirectory, `${slug}.mdx`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-    const { frontmatter, content } = await compileMDX<ArticleMeta>({
+    const { frontmatter, content } = await compileMDX<{
+      title: string;
+      description: string;
+      date: string;
+      thumbnail: string;
+      images: string[];
+      slug?: string;
+    }>({
       source: fileContents,
-      options: { parseFrontmatter: true }
+      components: {
+        Image: Image,
+      },
+      options: { 
+        parseFrontmatter: true,
+        mdxOptions: {
+          format: 'mdx'
+        }
+      }
     });
 
     return {
-      metadata: { ...frontmatter, slug },
+      metadata: { ...frontmatter, slug } as ArticleMeta,
       content
     };
   } catch (error) {

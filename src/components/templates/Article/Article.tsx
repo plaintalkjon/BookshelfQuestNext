@@ -1,5 +1,6 @@
 import { Text } from '@/components/atoms';
 import Image from 'next/image';
+import { Suspense } from 'react';
 
 interface ArticleProps {
   title: string;
@@ -7,11 +8,12 @@ interface ArticleProps {
   image?: {
     src: string;
     alt: string;
+    priority?: boolean;
   };
   children: React.ReactNode;
 }
-
 export const Article = ({ title, date, image, children }: ArticleProps) => {
+  console.log('Article children:', children);
   return (
     <article className="article">
       <header className="article-header">
@@ -28,11 +30,14 @@ export const Article = ({ title, date, image, children }: ArticleProps) => {
           className="article-image"
           width={800}
           height={400}
+          priority={image.priority}
         />
       )}
       
       <div className="article-content">
-        {children}
+        <Suspense fallback="Loading content...">
+          {children}
+        </Suspense>
       </div>
     </article>
   );
