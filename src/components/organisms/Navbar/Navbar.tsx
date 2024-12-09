@@ -17,6 +17,7 @@ const Navbar = () => {
     { label: "Home", path: "/" },
     { label: "Library", path: "/library" },
     { label: "Community", path: "/community" },
+    { label: "Articles", path: "/articles" },
   ];
 
   const handleNavigation = (path: AppRoute) => {

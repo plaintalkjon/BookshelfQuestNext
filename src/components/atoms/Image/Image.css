@@ -1,0 +1,34 @@
+.image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover; /* Maintains aspect ratio while filling container */
+}
+
+/* Optional: Add a subtle loading animation */
+.image:not([src]) {
+  opacity: 0;
+  animation: image-loading 1s infinite;
+}
+
+@keyframes image-loading {
+  0% {
+    background-color: var(--color-surface);
+  }
+  50% {
+    background-color: var(--color-surface-variant);
+  }
+  100% {
+    background-color: var(--color-surface);
+  }
+}
+
+/* Optional: Add a smooth fade-in effect when image loads */
+.image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image[src] {
+  opacity: 1;
+} 

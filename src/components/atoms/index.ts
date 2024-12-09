@@ -10,3 +10,6 @@ export type { InputProps } from './Input';
 
 export { Loading } from './Loading/Loading';
 export type { LoadingProps } from './Loading';
+
+export { Image } from './Image/Image';
+export type { ImageProps } from './Image/Image';
