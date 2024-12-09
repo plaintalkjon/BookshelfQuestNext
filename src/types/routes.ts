@@ -9,4 +9,5 @@ export type AppRoute = Route<
   | "/dashboard"
   | "/reset-password"
   | "/articles"
+  | `/articles/${string}`
 >;

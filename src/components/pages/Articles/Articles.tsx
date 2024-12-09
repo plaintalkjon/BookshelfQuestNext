@@ -1,53 +1,36 @@
 "use client";
 
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 import { ArticleCard } from '@/components/molecules/ArticleCard';
 import { Text } from '@/components/atoms';
 import './Articles.css';
+import { AppRoute } from '@/types/routes';
 
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  image_url: string;
-  created_at: string;
-  url: string;
-}
+const ExampleArticleCard = () => {
+  const router = useRouter();
+
+  return (
+    <ArticleCard
+      title="Getting Started with Next.js"
+      description="A beginner's guide to Next.js, covering the fundamentals and best practices for building modern web applications."
+      imageUrl="/images/articles/nextjs-guide/easton-press-books.jpg"
+      date="2024-03-14"
+      onClick={() => router.push('/articles/nextjs-guide' as AppRoute)}
+    />
+  );
+};
+
+const articles = [ExampleArticleCard];
 
 export const Articles = () => {
-  const { data: articles, isLoading } = useQuery({
-    queryKey: ['articles'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('articles')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return data as Article[];
-    },
-  });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="articles-container">
       <Text variant="h1">Articles</Text>
       <div className="articles-grid">
-        {articles?.map((article) => (
-          <ArticleCard
-            key={article.id}
-            title={article.title}
-            description={article.description}
-            imageUrl={article.image_url}
-            date={article.created_at}
-            onClick={() => window.open(article.url, '_blank')}
-          />
+        {articles.map((Article, index) => (
+          <Article key={index} />
         ))}
       </div>
     </div>
   );
-}; 
+};

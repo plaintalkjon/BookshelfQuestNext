@@ -1,4 +1,5 @@
 import { Text } from '@/components/atoms';
+import Image from 'next/image';
 
 interface ArticleProps {
   title: string;
@@ -21,10 +22,12 @@ export const Article = ({ title, date, image, children }: ArticleProps) => {
       </header>
       
       {image && (
-        <img 
+        <Image 
           src={image.src} 
           alt={image.alt} 
           className="article-image"
+          width={800}
+          height={400}
         />
       )}
       

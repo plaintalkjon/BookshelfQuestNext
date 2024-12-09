@@ -8,8 +8,8 @@ export type { TextProps, TextVariant } from './Text';
 export { Input } from './Input';
 export type { InputProps } from './Input';
 
-export { Loading } from './Loading/Loading';
+export { Loading } from './Loading';
 export type { LoadingProps } from './Loading';
 
-export { Image } from './Image/Image';
-export type { ImageProps } from './Image/Image';
+export { Image } from './Image';
+export type { ImageProps } from './Image';

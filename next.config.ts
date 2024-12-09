@@ -1,15 +1,19 @@
-import type { NextConfig } from "next";
+import createMDX from '@next/mdx';
 
-const nextConfig: NextConfig = {
+const withMDX = createMDX({
+  // Add markdown plugins here, if needed
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   images: {
     domains: ['vercel.com'],
   },
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  experimental: {
-    typedRoutes: true,
-  }
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);
