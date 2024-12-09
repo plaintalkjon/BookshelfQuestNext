@@ -3,21 +3,23 @@
 import { useRouter } from 'next/navigation';
 import { ArticleCard } from '@/components/molecules/ArticleCard';
 import { Text } from '@/components/atoms';
-import type { ArticleMeta } from '@/types/mdx';
-import './Articles.css';
+import type { ArticleGalleryProps } from './ArticleGallery.types';
+import { getRecentArticles } from '@/utils/articles';
+import { useMemo } from 'react';
+import './ArticleGallery.css';
 
-interface ArticlesProps {
-  articles: ArticleMeta[];
-}
-
-export const Articles = ({ articles }: ArticlesProps) => {
+export const ArticleGallery = ({ articles }: ArticleGalleryProps) => {
   const router = useRouter();
+  const recentArticles = useMemo(() => 
+    getRecentArticles(articles, 12),
+    [articles]
+  );
 
   return (
     <div className="articles-container">
       <Text variant="h1">Articles</Text>
       <div className="articles-grid">
-        {articles.map((article) => (
+        {recentArticles.map((article) => (
           <ArticleCard
             key={article.slug}
             title={article.title}

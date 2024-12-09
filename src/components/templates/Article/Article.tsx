@@ -13,7 +13,7 @@ interface ArticleProps {
   children: React.ReactNode;
 }
 export const Article = ({ title, date, image, children }: ArticleProps) => {
-  console.log('Article children:', children);
+
   return (
     <article className="article">
       <header className="article-header">
