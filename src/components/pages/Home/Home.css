@@ -1,0 +1,125 @@
+.home-container {
+  padding: 1rem;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.home-header h1 {
+  color: var(--color-text);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: var(--font-bold);
+}
+
+.subtitle {
+  color: var(--color-text);
+  font-size: 1.2rem;
+  font-weight: var(--font-regular);
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.card h2 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  font-weight: var(--font-semibold);
+}
+
+.card p {
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+
+/* Button Styles */
+.btn-primary, .btn-secondary, .btn-tertiary {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: var(--font-medium);
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-inverse);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-active);
+}
+
+.btn-tertiary {
+  background-color: transparent;
+  color: var(--color-tertiary);
+  border: 1px solid var(--color-tertiary);
+}
+
+.btn-tertiary:hover {
+  background-color: var(--color-tertiary);
+  color: var(--color-text-inverse);
+}
+
+.info-section {
+  margin-top: 3rem;
+}
+
+.info-box {
+  background-color: var(--color-surface);
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.info-box h3 {
+  color: var(--color-primary-900);
+  margin-bottom: 1rem;
+}
+
+.info-box p {
+  color: var(--color-primary-700);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem;
+  }
+
+  .home-header h1 {
+    font-size: 2rem;
+  }
+
+  .feature-cards {
+    grid-template-columns: 1fr;
+  }
+}

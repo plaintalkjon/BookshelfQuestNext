@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-error {
+  color: var(--color-error, #dc2626);
+  text-align: center;
+} 

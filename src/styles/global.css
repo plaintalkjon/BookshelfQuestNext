@@ -1,0 +1,108 @@
+:root {
+    /* Brand Colors - The source of truth */
+    --color-rich-black: #071013;
+    --color-cosmic-latte: #faf3e0;
+    --color-lion: #b08d57;
+    --color-majorelle-blue: #5E4AE3;
+    --color-caput-mortuum: #63372c;
+    --color-paper: #ffffff;     
+    /* Design System Colors */
+    --color-primary: var(--color-rich-black);    /* Main brand color */
+    --color-secondary: var(--color-lion);          /* Supporting color */
+    --color-tertiary: var(--color-majorelle-blue);       /* Additional accent */
+    
+    /* UI Colors */
+    --color-background: var(--color-cosmic-latte);  /* Main background */
+    --color-surface: var(--color-paper);            /* Cards, dialogs, etc. */
+    --color-surface-alt: var(--color-rich-black);   /* Alternative surface */
+    --color-text: var(--color-rich-black);
+    --color-text-inverse: var(--color-cosmic-latte);
+    --color-accent: var(--color-caput-mortuum);
+  
+    /* Interactive States */
+    --color-hover: var(--color-lion);
+    --color-active: var(--color-majorelle-blue);
+    --color-disabled: rgba(38, 35, 34, 0.5);       /* Raisin Black with opacity */
+  
+    /* Font family */
+    --font-primary: "Lexend Deca", sans-serif;
+    
+    /* Font weights */
+    --font-thin: 100;
+    --font-extralight: 200;
+    --font-light: 300;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+    --font-black: 900;
+  }
+  
+  /* Base Styles */
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-primary);
+    font-optical-sizing: auto;
+    font-weight: var(--font-regular);
+    font-style: normal;
+    margin: 0;
+  }
+  
+  /* Component Base Styles */
+  header {
+    background-color: var(--color-surface);
+    color: var(--color-text-inverse);
+  }
+  
+  a {
+    color: var(--color-secondary);
+  }
+  
+  button {
+    background-color: var(--color-tertiary);
+    color: var(--color-text-inverse);
+  }
+  
+  button:hover {
+    background-color: var(--color-hover);
+  }
+  
+  button:disabled {
+    background-color: var(--color-disabled);
+  }
+  
+  footer {
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+  }
+  
+  /* Typography Utilities */
+  .text-thin {
+    font-weight: var(--font-thin);
+  }
+  
+  .text-light {
+    font-weight: var(--font-light);
+  }
+  
+  .text-regular {
+    font-weight: var(--font-regular);
+  }
+  
+  .text-medium {
+    font-weight: var(--font-medium);
+  }
+  
+  .text-semibold {
+    font-weight: var(--font-semibold);
+  }
+  
+  .text-bold {
+    font-weight: var(--font-bold);
+  }
+  
+  .text-black {
+    font-weight: var(--font-black);
+  }
