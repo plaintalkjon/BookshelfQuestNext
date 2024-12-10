@@ -1,27 +1,20 @@
+'use client';
+
 import { Image, Text } from '@/components/atoms';
 import './ArticleCard.css';
-
-export interface ArticleCardProps {
-  title: string;
-  description: string;
-  imageUrl: string;
-  date: string;
-  onClick?: () => void;
-  className?: string;
-}
+import type { ArticleCardProps } from './ArticleCard.types';
 
 export const ArticleCard = ({
   title,
   description,
   imageUrl,
   date,
-  onClick,
   className = '',
 }: ArticleCardProps) => {
+
   return (
     <div 
       className={`article-card ${className}`}
-      onClick={onClick}
       role="button"
       tabIndex={0}
     >
@@ -29,6 +22,8 @@ export const ArticleCard = ({
         src={imageUrl}
         alt={title}
         className="article-card-image"
+        width={400}
+        height={225}
       />
       <div className="article-card-content">
         <Text variant="h3" className="article-card-title">

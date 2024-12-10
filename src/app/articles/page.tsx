@@ -1,8 +1,8 @@
 import { ArticleGallery } from '@/components/pages/ArticleGallery';
-import { getAllArticles } from '@/utils/mdx';
+import { getRecentArticles } from '@/utils/mdx';
 
 export default async function ArticlesPage() {
-  const articles = await getAllArticles();
+  const articles = await getRecentArticles(12);
   
   return (
       <ArticleGallery articles={articles} />

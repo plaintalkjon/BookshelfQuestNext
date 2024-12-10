@@ -1,9 +1,8 @@
-import Home from "@/components/pages/Home/Home";
+import { Home } from "@/components/pages";
+import { getRecentArticles } from "@/utils/mdx";
 
-export default function Page() {
-  return (
-    <div>
-      <Home />
-    </div>
-  );
+export default async function HomePage() {
+  const articles = await getRecentArticles(3);
+  
+  return <Home articles={articles} />;
 }

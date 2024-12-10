@@ -3,17 +3,18 @@
 import { useUser } from "@/hooks/useUser";
 import { Text, Button } from "@/components/atoms";
 import { useRouter } from "next/navigation";
+import { ArticleShowcase } from "@/components/organisms";
 import "./Home.css";
 import type { AppRoute } from "@/types/routes";
+import type { Article } from "@/types/mdx";
 
-const Home = () => {
+export const Home = ({ articles }: { articles: Article[] }) => {
   const { data: user, isLoading } = useUser();
   const router = useRouter();
 
   if (isLoading) {
     return <div className="home-loading">Loading...</div>;
   }
-  console.log(user);
 
   return (
     <div className="home-container">
@@ -33,6 +34,8 @@ const Home = () => {
               <Text variant="body">0 books</Text>
             </div>
           </div>
+
+          <ArticleShowcase gridMinWidth="350px" title={"Newest Articles"} direction="row" articles={articles} />
         </>
       ) : (
         // Public landing page

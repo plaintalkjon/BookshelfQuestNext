@@ -1,18 +1,14 @@
 import { ArticleCard } from '@/components/molecules/ArticleCard';
 import { Text } from '@/components/atoms';
-import { getRecentArticles } from '@/utils/articles';
 import type { ArticleShowcaseProps } from './ArticleShowcase.types';
 import './ArticleShowcase.css';
 
 export const ArticleShowcase = ({ 
-  articles,
-  limit = 3,
   direction = 'row',
   title = 'Recent Articles',
   gridMinWidth = '300px',
+  articles,
 }: ArticleShowcaseProps) => {
-  const recentArticles = getRecentArticles(articles, limit);
-
   return (
     <div className="article-showcase">
       {title && <Text variant="h2">{title}</Text>}
@@ -24,7 +20,7 @@ export const ArticleShowcase = ({
             : '1fr'
         }}
       >
-        {recentArticles.map((article) => (
+        {articles.map((article) => (
           <ArticleCard
             key={article.slug}
             title={article.title}

@@ -3,6 +3,5 @@ export interface ArticleCardProps {
   description: string;
   imageUrl: string;
   date: string;
-  onClick?: () => void;
   className?: string;
 } 
