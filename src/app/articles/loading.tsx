@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="loading-container">
       <Image
         src="/images/loading.svg"
-        alt="Loading..."
+        alt=""
         width={50}
         height={50}
         priority
