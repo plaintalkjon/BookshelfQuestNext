@@ -7,16 +7,23 @@ export const BookInfo = ({
   authors, 
   publisher, 
   publishedDate, 
-  coverUrl 
+  coverUrl,
+  imageWidth = 100
 }: BookInfoProps) => (
   <div className="book-info">
     <Image 
       src={coverUrl || '/images/default-book-cover.png'} 
       alt={title}
       className="book-cover"
+      width={200}
+      height={300}
+      style={{
+        width: imageWidth,
+        height: imageWidth * 1.5
+      }}
     />
     <div className="book-details">
-      <Text variant="h3">{title}</Text>
+      <Text variant="body">{title}</Text>
       <Text variant="body">By {authors.join(', ')}</Text>
       {publisher && <Text variant="caption">{publisher}</Text>}
       {publishedDate && <Text variant="caption">{publishedDate}</Text>}

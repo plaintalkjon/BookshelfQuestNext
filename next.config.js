@@ -1,4 +1,4 @@
-import createMDX from '@next/mdx';
+const createMDX = require('@next/mdx');
 
 const withMDX = createMDX({
   options: {
@@ -11,10 +11,8 @@ const withMDX = createMDX({
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   images: {
-    domains: [
-      'images.isbndb.com'
-    ],
+    domains: ['images.isbndb.com']
   },
 };
 
-export default withMDX(nextConfig); 
+module.exports = withMDX(nextConfig); 

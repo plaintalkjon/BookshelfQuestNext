@@ -4,4 +4,6 @@ export interface BookInfoProps {
   publisher?: string;
   publishedDate?: string;
   coverUrl?: string;
-} 
+  imageWidth?: number;
+  imageHeight?: number;
+}   

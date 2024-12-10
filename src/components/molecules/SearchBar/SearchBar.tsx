@@ -69,6 +69,8 @@ export const SearchBar = () => {
                   title={book.title}
                   authors={book.authors}
                   coverUrl={book.image}
+                  imageWidth={50}
+                  imageHeight={75}
                 />
               </div>
             ))
