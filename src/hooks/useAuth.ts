@@ -29,15 +29,33 @@ export const useAuth = () => {
   };
 
   const login = useMutation({
-    mutationFn: async (credentials: LoginCredentials) => {
-      const { data, error } = await supabase.auth.signInWithPassword(
-        credentials
-      );
+    mutationFn: async ({ email, password }: LoginCredentials) => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
       if (error) throw error;
+      
+      // Debug session and cookie information
+      console.log('🔐 Login successful:', {
+        session: !!data.session,
+        sessionData: data.session,
+        cookies: document.cookie // Check what cookies are set
+      });
+      
       return data;
     },
-    onSuccess: () => {
-      handleNavigation("/");
+    onSuccess: (data) => {
+      console.log('📍 Session after login:', {
+        session: !!data.session,
+        cookies: document.cookie // Check cookies after success
+      });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      router.refresh();
+      setTimeout(() => router.push('/'), 1000);
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 
@@ -132,10 +150,12 @@ export const useAuth = () => {
       if (error) throw error;
     },
     onSuccess: () => {
-      handleNavigation("/");
-      queryClient.setQueryData(["user"], null);
-      toast.success("Logged out successfully");
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      router.refresh(); // Force a refresh of the current page
+      router.push('/login');
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 

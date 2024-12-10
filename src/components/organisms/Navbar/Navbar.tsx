@@ -18,6 +18,7 @@ const Navbar = () => {
     { label: "Library", path: "/library" },
     { label: "Community", path: "/community" },
     { label: "Articles", path: "/articles" },
+    { label: "Settings", path: "/settings" }
   ];
 
   const handleNavigation = (path: AppRoute) => {
@@ -50,7 +51,13 @@ const Navbar = () => {
           variant="body" 
           color="primary" 
           className="nav-link" 
-          onClick={() => handleNavigation("/profile")}
+          onClick={() => {
+            if (user?.username) {
+              handleNavigation(`/profile/${user.username}`);
+            } else {
+              handleNavigation('/login');
+            }
+          }}
         >
           Profile
         </Text>

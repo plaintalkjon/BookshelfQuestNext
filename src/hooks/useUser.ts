@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from "@/lib/supabase";
 
 export const useUser = () => {
-  return useQuery({
+  const queryClient = useQueryClient();
+  const query = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
@@ -18,4 +19,9 @@ export const useUser = () => {
       return profile;
     }
   });
+
+  return {
+    ...query,
+    mutate: () => queryClient.invalidateQueries({ queryKey: ['user'] })
+  };
 };

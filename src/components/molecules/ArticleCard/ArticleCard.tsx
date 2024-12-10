@@ -1,6 +1,7 @@
 'use client';
 
 import { Image, Text } from '@/components/atoms';
+import { useRouter } from 'next/navigation';
 import './ArticleCard.css';
 import type { ArticleCardProps } from './ArticleCard.types';
 
@@ -9,12 +10,19 @@ export const ArticleCard = ({
   description,
   imageUrl,
   date,
+  slug,
   className = '',
 }: ArticleCardProps) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/articles/${slug}`);
+  };
 
   return (
     <div 
       className={`article-card ${className}`}
+      onClick={handleClick}
       role="button"
       tabIndex={0}
     >

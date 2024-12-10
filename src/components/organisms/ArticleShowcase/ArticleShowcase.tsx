@@ -27,6 +27,7 @@ export const ArticleShowcase = ({
             description={article.description}
             imageUrl={article.thumbnail}
             date={article.date}
+            slug={article.slug}
           />
         ))}
       </div>
