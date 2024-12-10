@@ -7,7 +7,7 @@ import { settingsService } from '@/services/settings';
 import './Settings.css';
 
 export const Settings = () => {
-  const { data: user, isLoading, mutate } = useUser();
+  const { data: user, isLoading } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -28,81 +28,53 @@ export const Settings = () => {
     setIsSubmitting(true);
 
     try {
-      // Always require password confirmation for any changes
+      // Verify current password
       if (!confirmPassword) {
         throw new Error("Please confirm your password to make changes");
       }
 
-      // Validate passwords if attempting to change
-      if (formData.newPassword) {
-        if (formData.newPassword !== formData.confirmPassword) {
-          throw new Error("New passwords don't match");
-        }
-      }
-
-      // First verify current password
       await settingsService.verifyPassword(confirmPassword);
-
-      // If password verification successful, proceed with updates
-      if (formData.newPassword) {
-        await settingsService.updateAuthPassword(formData.newPassword);
-      }
 
       // Update email if changed
       if (formData.email !== user?.email) {
         await settingsService.updateAuthEmail(formData.email);
       }
 
+      // Update password if provided
+      if (formData.newPassword) {
+        if (formData.newPassword !== formData.confirmPassword) {
+          throw new Error("New passwords don't match");
+        }
+        await settingsService.updateAuthPassword(formData.newPassword);
+      }
+
       // Update profile fields if changed
-      if (formData.username !== user?.username || formData.display_name !== user?.display_name) {
+      if (formData.display_name !== user?.display_name || 
+          formData.username !== user?.username) {
         await settingsService.updateProfileFields(user.id, {
-          username: formData.username,
           display_name: formData.display_name,
+          username: formData.username,
         });
       }
 
-      // Clear sensitive fields
-      setFormData(prev => ({
-        ...prev,
-        newPassword: '',
-        confirmPassword: '',
-      }));
-      setConfirmPassword('');
-
-      // Refresh user data
-      await mutate();
-      
-      setSuccess('Settings updated successfully!');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setSuccess("Settings updated successfully!");
+    } catch (error) {
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="settings-container">
-      <Text variant="h1">Account Settings</Text>
-      
-      {error && (
-        <div className="settings-alert error">
-          <Text>{error}</Text>
-        </div>
-      )}
-      
-      {success && (
-        <div className="settings-alert success">
-          <Text>{success}</Text>
-        </div>
-      )}
+      {error && <div className="error-message">{error}</div>}
+      {success && <div className="success-message">{success}</div>}
 
-      <form onSubmit={handleSubmit} className="settings-form">
+      <form onSubmit={handleSubmit}>
         <div className="settings-section">
-          <Text variant="h2">Profile Information</Text>
+          <Text variant="h2">Profile Settings</Text>
           <Input
             label="Display Name"
             value={formData.display_name}
@@ -114,7 +86,6 @@ export const Settings = () => {
             onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
           />
           <Input
-            type="email"
             label="Email"
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}

@@ -3,6 +3,7 @@
   --color-rich-black: #071013;
   --color-cosmic-latte: #faf3e0;
   --color-lion: #b08d57;
+  --color-chamoisee: #b08d57;
   --color-majorelle-blue: #5E4AE3;
   --color-caput-mortuum: #63372c;
   --color-paper: #ffffff;     
@@ -13,6 +14,7 @@
   
   /* UI Colors */
   --color-background: var(--color-cosmic-latte);  /* Main background */
+  --color-background-alt: var(--color-chamoisee); /* Alternative background */
   --color-surface: var(--color-paper);            /* Cards, dialogs, etc. */
   --color-surface-alt: var(--color-rich-black);   /* Alternative surface */
   --color-text: var(--color-rich-black);

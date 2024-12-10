@@ -132,7 +132,7 @@ export const Login = () => {
               <Button variant="tertiary" onClick={() => setMode("forgot")}>
                 Forgot Password?
               </Button>
-              <Text variant="body-small">Don&apos;t have an account?</Text>
+              <Text variant="body">Don&apos;t have an account?</Text>
               <Button variant="tertiary" onClick={() => setMode("signup")}>
                 Sign Up
               </Button>

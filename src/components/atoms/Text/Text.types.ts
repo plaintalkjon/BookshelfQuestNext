@@ -1,3 +1,5 @@
+import type { ElementType, ReactNode } from 'react';
+
 export type TextVariant = 
   | 'h1' 
   | 'h2' 
@@ -7,10 +9,10 @@ export type TextVariant =
   | 'caption';
 
 export interface TextProps {
-  variant?: TextVariant;
-  children: React.ReactNode;
+  variant?: 'h1' | 'h2' | 'h3' | 'body' | 'caption' | 'link';
+  children: ReactNode;
   className?: string;
   color?: 'primary' | 'secondary' | 'inverse';
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
   onClick?: () => void;
 } 

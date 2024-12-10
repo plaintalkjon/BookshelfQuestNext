@@ -3,13 +3,14 @@ import { Article } from '@/components/templates';
 import { getArticleBySlug } from '@/utils/mdx';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = await getArticleBySlug(params.slug);
+  const resolvedParams = await params;
+  const article = await getArticleBySlug(resolvedParams.slug);
   
   if (!article) {
     notFound();

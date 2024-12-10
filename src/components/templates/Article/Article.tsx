@@ -18,7 +18,7 @@ export const Article = ({ title, date, image, children }: ArticleProps) => {
     <article className="article">
       <header className="article-header">
         <Text variant="h1">{title}</Text>
-        <Text variant="body-small" className="article-date">
+        <Text variant="body" className="article-date">
           {new Date(date).toLocaleDateString()}
         </Text>
       </header>

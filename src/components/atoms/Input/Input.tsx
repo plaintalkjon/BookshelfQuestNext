@@ -21,7 +21,7 @@ export const Input = ({
   return (
     <div className={`input-group ${fullWidth ? 'input-full-width' : ''} ${className}`}>
       <label htmlFor={inputId} className="input-label">
-        <Text variant="body-small" color="primary">{label}</Text>
+        <Text variant="body" color="primary">{label}</Text>
       </label>
       
       <div className="input-wrapper">

@@ -3,6 +3,7 @@
 import { Button, Text } from "@/components/atoms";
 import { useUser } from "@/hooks/useUser";
 import { useAuth } from "@/hooks/useAuth";
+import { SearchBar } from "@/components/molecules";
 import { usePathname, useRouter } from "next/navigation";
 import "./Navbar.css";
 import type { AppRoute } from "@/types/routes";
@@ -40,7 +41,7 @@ const Navbar = () => {
           <Text
             key={item.path}
             variant="body"
-            color="primary"
+            color="inverse"
             className="nav-link"
             onClick={() => handleNavigation(item.path)}
           >
@@ -49,7 +50,7 @@ const Navbar = () => {
         ))}
         <Text 
           variant="body" 
-          color="primary" 
+          color="inverse" 
           className="nav-link" 
           onClick={() => {
             if (user?.username) {
@@ -61,6 +62,7 @@ const Navbar = () => {
         >
           Profile
         </Text>
+        <SearchBar />
       </div>
 
       <div className="navbar-actions">
@@ -85,5 +87,5 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;
+
