@@ -11,15 +11,12 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
     storage: {
       getItem: (key) => {
         const value = document.cookie.match(new RegExp(`${key}=([^;]+)`))?.[1] ?? null;
-        console.log('Getting cookie:', { key, value });
         return value;
       },
       setItem: (key, value) => {
-        console.log('Setting cookie:', { key, value });
         document.cookie = `${key}=${value}; path=/; max-age=86400; secure; samesite=lax`;
       },
       removeItem: (key) => {
-        console.log('Removing cookie:', key);
         document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
       },
     },

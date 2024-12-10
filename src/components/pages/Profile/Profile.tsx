@@ -2,7 +2,7 @@
 
 import { Text } from '@/components/atoms';
 import './Profile.css';
-import { UserProfile } from '@/types/profile';
+import type { UserProfile } from '@/types/profile';
 
 interface ProfileProps {
   profile: UserProfile;
@@ -17,10 +17,6 @@ export const Profile = ({ profile }: ProfileProps) => {
         <Text variant="caption">
           Member since {new Date(profile.created_at).toLocaleDateString()}
         </Text>
-      </div>
-      
-      <div className="profile-content">
-        {/* Add more public profile content here */}
       </div>
     </div>
   );

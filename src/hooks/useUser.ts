@@ -1,27 +1,32 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { supabase } from "@/lib/supabase";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
 
 export const useUser = () => {
-  const queryClient = useQueryClient();
-  const query = useQuery({
+  return useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) throw error;
-      if (!session) return null;
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
       
-      const { data: profile } = await supabase
-        .from('user_profiles')
+      if (authError || !user) {
+        console.error('Auth error:', authError);
+        return null;
+      }
+
+      const { data: profile, error: profileError } = await supabase
+        .from('user_profiles')  // Make sure this matches your table name
         .select('*')
-        .eq('user_id', session.user.id)
+        .eq('user_id', user.id)
         .single();
 
-      return profile;
-    }
-  });
+      if (profileError) {
+        console.error('Profile error:', profileError);
+        return null;
+      }
 
-  return {
-    ...query,
-    mutate: () => queryClient.invalidateQueries({ queryKey: ['user'] })
-  };
+      return {
+        ...user,
+        ...profile
+      };
+    },
+  });
 };

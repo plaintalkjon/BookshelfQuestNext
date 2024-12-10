@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Text, Button, Input } from '@/components/atoms';
 import { useUser } from '@/hooks/useUser';
-import { supabase } from '@/lib/supabase';
+import { settingsService } from '@/services/settings';
 import './Settings.css';
 
 export const Settings = () => {
@@ -17,7 +17,6 @@ export const Settings = () => {
     email: user?.email || '',
     display_name: user?.display_name || '',
     username: user?.username || '',
-    currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
@@ -42,46 +41,24 @@ export const Settings = () => {
       }
 
       // First verify current password
-      const { error: verifyError } = await supabase.auth.signInWithPassword({
-        email: user?.email || '',
-        password: confirmPassword,
-      });
-
-      if (verifyError) {
-        throw new Error("Current password is incorrect");
-      }
+      await settingsService.verifyPassword(confirmPassword);
 
       // If password verification successful, proceed with updates
       if (formData.newPassword) {
-        const response = await fetch('/api/user/password', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            currentPassword: confirmPassword,
-            newPassword: formData.newPassword,
-          }),
-        });
-
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.message || 'Failed to update password');
-        }
+        await settingsService.updateAuthPassword(formData.newPassword);
       }
 
-      // Update profile information
-      const response = await fetch('/api/user/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          display_name: formData.display_name,
-          username: formData.username,
-        }),
-      });
+      // Update email if changed
+      if (formData.email !== user?.email) {
+        await settingsService.updateAuthEmail(formData.email);
+      }
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Failed to update profile');
+      // Update profile fields if changed
+      if (formData.username !== user?.username || formData.display_name !== user?.display_name) {
+        await settingsService.updateProfileFields(user.id, {
+          username: formData.username,
+          display_name: formData.display_name,
+        });
       }
 
       // Clear sensitive fields

@@ -1,13 +1,12 @@
 import { supabase } from "@/lib/supabase";
 import type { UserProfile } from "@/types/profile";
 
-export async function getProfileByUsername(
-  username: string
-): Promise<UserProfile | null> {
-  try {
-    const { data: profile, error } = await supabase
+export const profileService = {
+  // Public profile data
+  async getProfileByUsername(username: string): Promise<UserProfile | null> {
+    const { data, error } = await supabase
       .from("user_profiles")
-      .select("username, display_name, created_at")
+      .select("username, display_name, created_at")  // Public fields only
       .eq("username", username)
       .single();
 
@@ -15,10 +14,7 @@ export async function getProfileByUsername(
       console.error("Error fetching profile:", error);
       return null;
     }
+    return data;
+  },
 
-    return profile;
-  } catch (error) {
-    console.error("Error in getProfileByUsername:", error);
-    return null;
-  }
-}
+};
