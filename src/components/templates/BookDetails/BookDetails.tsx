@@ -5,7 +5,7 @@ import { Text, Button } from "@/components/atoms";
 import "./BookDetails.css";
 import { BookDetailsProps } from "./BookDetails.types";
 import DOMPurify from "isomorphic-dompurify";
-import { BookEditionsSlider } from "@/components/organisms";
+import { BookEditionsGrid } from "@/components/organisms/BookEditionsGrid/BookEditionsGrid";
 export const BookDetails = ({ book }: BookDetailsProps) => {
   return (
     <div className="book-details-container">
@@ -31,7 +31,6 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
 
           {book.synopsis && (
             <div className="book-details-synopsis">
-              <Text variant="h2">Synopsis</Text>
               <Text
                 variant="body"
                 dangerouslySetInnerHTML={{
@@ -63,7 +62,7 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
       {book.editions && book.editions.length > 1 && (
         <div className="book-editions">
           <Text variant="h2">Other Editions</Text>
-          <BookEditionsSlider editions={book.editions} />
+          <BookEditionsGrid editions={book.editions} />
         </div>
       )}
     </div>

@@ -19,7 +19,7 @@ export const googleBooksService = {
         title: book.title,
         authors: book.authors || [],
         publisher: book.publisher,
-        published_date: book.publishedDate,
+        date_published: book.publishedDate,
         synopsis: book.description,
         image: book.imageLinks?.extraLarge?.replace("http:", "https:"),
         pages: book.pageCount,
@@ -54,7 +54,7 @@ export const googleBooksService = {
             title: item.volumeInfo.title,
             authors: item.volumeInfo.authors || [],
             publisher: item.volumeInfo.publisher,
-            published_date: item.volumeInfo.publishedDate,
+            date_published: item.volumeInfo.publishedDate,
             synopsis: item.volumeInfo.description,
             image: item.volumeInfo.imageLinks?.thumbnail?.replace(
               "http:",

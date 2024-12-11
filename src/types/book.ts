@@ -3,7 +3,7 @@ export interface Book {
   title?: string;
   authors?: string[];
   publisher?: string;
-  published_date?: string;
+  date_published?: string;
   synopsis?: string;
   image?: string;
   pages?: number;

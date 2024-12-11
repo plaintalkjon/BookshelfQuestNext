@@ -6,14 +6,14 @@ export const isbndbService = {
     try {
       const response = await isbndb.fetch(`/book/${isbn}`);
       const data = response.book;
-      
+      console.log("data", data);
       return {
         isbn13: data.isbn13,
         title: data.title,
         authors: data.authors || [],
         pages: data.pages,
         publisher: data.publisher,
-        published_date: data.date_published,
+        date_published: data.date_published,
         edition: data.edition,
         synopsis: data.synopsis,
         image: data.image,

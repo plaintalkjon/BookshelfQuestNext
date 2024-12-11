@@ -8,7 +8,7 @@ export const BookCard = ({ book, onClick }: BookCardProps) => (
       title={book.title}
       authors={book.authors}
       publisher={book.publisher}
-      publishedDate={book.published_date}
+      publishedDate={book.date_published}
       coverUrl={book.image}
     />
   </div>

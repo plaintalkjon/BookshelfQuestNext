@@ -57,7 +57,7 @@ export function scoreBookData(book: Book): number {
   // Basic info scores
   if (book.authors?.length) score += 5;
   if (book.publisher) score += 5;
-  if (book.published_date) score += 5;
+  if (book.date_published) score += 5;
   if (book.pages) score += 5;
   if (book.language) score += 5;
 

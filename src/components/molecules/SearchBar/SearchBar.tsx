@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/atoms';
 import { BookSearch } from '@/components/molecules/BookSearch';
@@ -14,6 +14,21 @@ export const SearchBar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchResults, setSearchResults] = useState<Book[]>([]);
   const router = useRouter();
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current && 
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const debouncedSearch = useDebounce(async (query: string) => {
     if (!query.trim()) {
@@ -41,7 +56,7 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className="search-container">
+    <div className="search-container" ref={searchContainerRef}>
       <Input
         type="search"
         placeholder="Search books..."

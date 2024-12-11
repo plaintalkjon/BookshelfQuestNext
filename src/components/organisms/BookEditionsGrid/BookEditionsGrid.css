@@ -1,0 +1,49 @@
+.editions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.editions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.edition-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.edition-card:hover {
+  transform: translateY(-4px);
+}
+
+.edition-image {
+  width: 150px;
+  height: 225px;
+  position: relative;
+}
+
+.edition-info {
+  text-align: center;
+  width: 100%;
+}
+
+.show-more-button {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .editions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+} 
