@@ -4,26 +4,72 @@ import type { Book } from '@/types/book';
 
 export const bookDetailsService = {
   async getBookDetails(isbn: string) {
+    // 1. Get initial book and create composite
     const [isbndbBook, googleBook] = await Promise.all([
       isbndbService.getBookByIsbn(isbn),
       googleBooksService.getBookByIsbn(isbn)
     ]);
 
     if (!isbndbBook && !googleBook) return null;
-    return this.createCompositeBook(isbn, [isbndbBook, googleBook]);
+    const mainBook = this.createCompositeBook(isbn, [isbndbBook, googleBook]);
+
+    // 2. Search for all editions to find best synopsis
+    const searchQuery = `${mainBook.title} ${mainBook.authors?.[0] || ''}`;
+    const [isbndbEditions, googleEditions] = await Promise.all([
+      isbndbService.searchBooks(searchQuery),
+      googleBooksService.searchBooks(searchQuery)
+    ]);
+
+    // 3. Filter to related editions and find best fields
+    const relatedEditions = [...isbndbEditions.books, ...googleEditions.books]
+      .filter(book => this.isRelatedEdition(book, mainBook));
+
+    // 4. Create final book with best synopsis, categories and all editions
+    return {
+      ...mainBook,
+      synopsis: this.getBestField('synopsis', relatedEditions),
+      categories: this.getBestField('categories', relatedEditions),
+      editions: [mainBook, ...relatedEditions.filter(book => book.isbn13 !== isbn)]
+    };
+  },
+
+  isRelatedEdition(candidate: Book, mainBook: Book): boolean {
+    if (!candidate.title || !mainBook.title) return false;
+
+    const normalizeStr = (str: string) => 
+      str.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const titleMatch = normalizeStr(candidate.title) === normalizeStr(mainBook.title);
+    const authorMatch = Boolean(
+      candidate.authors?.[0] && 
+      mainBook.authors?.[0] && 
+      normalizeStr(candidate.authors[0]) === normalizeStr(mainBook.authors[0])
+    );
+
+    return titleMatch && authorMatch;
   },
 
   createCompositeBook(isbn: string, books: (Book | null)[]): Book {
-
-    return {
+    const validBooks = books.filter((book): book is Book => book !== null);
+    
+    // Create the best version of the book
+    const bestBook: Book = {
       isbn13: isbn,
-      title: this.getBestField('title', books),
-      authors: this.getBestField('authors', books),
-      published_date: this.getBestField('published_date', books),
-      synopsis: this.getBestField('synopsis', books),
-      image: this.getBestField('image', books)?.replace('&edge=curl', ''),
-      categories: this.getBestField('categories', books),
+      title: this.getBestField('title', validBooks),
+      authors: this.getBestField('authors', validBooks),
+      published_date: this.getBestField('published_date', validBooks),
+      synopsis: this.getBestField('synopsis', validBooks),
+      image: this.getBestField('image', validBooks)?.replace(/zoom=[1-5]/, 'zoom=6').replace('&edge=curl', ''),
+      categories: this.getBestField('categories', validBooks),
+      // Store all valid editions, including the original books
+      editions: validBooks.map(book => ({
+        ...book,
+        // Ensure each edition has a high-quality image
+        image: book.image?.replace(/zoom=[1-5]/, 'zoom=6').replace('&edge=curl', '')
+      }))
     };
+    console.log("bestBook editions", bestBook.editions);
+    return bestBook;
   },
 
   getBestField<K extends keyof Book>(field: K, books: (Book | null)[]): Book[K] {
@@ -70,7 +116,7 @@ export const bookDetailsService = {
       },
       
       synopsis: (text) => 
-        (!text) ? 0 : text.length,
+        (!text || text.length > 1500) ? 0 : text.length,
       
       image: (url) => {
         if (!url) return 0;

@@ -10,13 +10,12 @@
   margin-bottom: 2rem;
 }
 
-.book-cover {
+.book-details-cover {
   position: relative;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
-  width: 300px;
-  height: 450px;
+
 }
 
 .book-info {
@@ -31,10 +30,10 @@
   margin-top: 1rem;
 }
 
-.book-synopsis {
+.book-editions {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--border-color);
 }
 
 @media (max-width: 768px) {

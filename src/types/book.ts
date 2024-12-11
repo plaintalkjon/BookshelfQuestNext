@@ -13,6 +13,7 @@ export interface Book {
   categories?: string[];
   rating?: number;
   language?: string;
+  editions?: Book[];
 }
 
 export interface SearchResponse {
