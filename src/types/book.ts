@@ -6,6 +6,10 @@ export interface Book {
   published_date?: string;
   synopsis?: string;
   image?: string;
+  pages?: number;
+  edition?: string;
+  related?: string[];
+  binding?: string;
 }
 
 export interface SearchResponse {

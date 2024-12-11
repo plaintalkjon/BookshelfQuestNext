@@ -73,10 +73,14 @@ export const isbndbService = {
         isbn13: data.isbn13,
         title: data.title,
         authors: data.authors || [],
+        pages: data.pages,
         publisher: data.publisher,
         published_date: data.published_date,
+        edition: data.edition,
         synopsis: data.synopsis,
-        image: data.image
+        image: data.image,
+        related: data.related,
+        binding: data.binding
       };
     } catch (error) {
       console.error('Get book error:', error);
