@@ -51,7 +51,7 @@ export function scoreBookData(book: Book): number {
   if (book.synopsis) score += 30;
   if (book.synopsis && book.synopsis?.length > 100) score += 20;
   if (book.image) score += 15;
-  if (book.categories?.length) score += 10;
+  if (book.subjects?.length) score += 10;
   if (book.rating) score += 10;
   
   // Basic info scores

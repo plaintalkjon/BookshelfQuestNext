@@ -30,6 +30,17 @@
   margin-top: 1rem;
 }
 
+.book-details-subjects {
+  gap: 1rem;
+  border-top: 1px solid var(--border-color);
+} 
+
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .book-editions {
   margin-top: 2rem;
   padding-top: 2rem;

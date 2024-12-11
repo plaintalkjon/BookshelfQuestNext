@@ -11,7 +11,7 @@ export interface GoogleBookVolumeInfo {
   description?: string;
   industryIdentifiers?: GoogleBookIdentifier[];
   pageCount?: number;
-  categories?: string[];
+  subjects?: string[];
   averageRating?: number;
   imageLinks?: {
     thumbnail?: string;

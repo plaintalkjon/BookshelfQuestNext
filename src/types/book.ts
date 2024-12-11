@@ -10,7 +10,7 @@ export interface Book {
   edition?: string;
   related?: string[];
   binding?: string;
-  categories?: string[];
+  subjects?: string[];
   rating?: number;
   language?: string;
   editions?: Book[];

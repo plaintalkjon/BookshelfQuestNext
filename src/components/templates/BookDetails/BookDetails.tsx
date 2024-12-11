@@ -47,11 +47,11 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
         </div>
       </div>
 
-      {book.categories && book.categories.length > 0 && (
-        <div className="book-categories">
+      {book.subjects && book.subjects.length > 0 && (
+        <div className="book-details-subjects">
           <Text variant="h2">Categories</Text>
           <div className="category-tags">
-            {book.categories.map((category) => (
+            {book.subjects.map((category) => (
               <span key={category} className="category-tag">
                 {category}
               </span>

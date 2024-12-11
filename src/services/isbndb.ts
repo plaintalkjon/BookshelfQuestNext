@@ -17,7 +17,9 @@ export const isbndbService = {
         edition: data.edition,
         synopsis: data.synopsis,
         image: data.image,
-        binding: data.binding
+        binding: data.binding,
+        subjects: data.subjects || [],
+        
       };
     } catch (error) {
       console.error('Get book error:', error);

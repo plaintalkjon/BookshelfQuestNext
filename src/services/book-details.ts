@@ -9,8 +9,7 @@ export const bookDetailsService = {
       isbndbService.getBookByIsbn(isbn),
       googleBooksService.getBookByIsbn(isbn),
     ]);
-    console.log("isbndbBook", isbndbBook);
-    console.log("googleBook", googleBook);
+
     if (!isbndbBook && !googleBook) return null;
     const mainBook = this.createCompositeBook(isbn, [isbndbBook, googleBook]);
 
@@ -26,16 +25,24 @@ export const bookDetailsService = {
       ...isbndbEditions.books,
       ...googleEditions.books,
     ].filter((book) => this.isRelatedEdition(book, mainBook));
-    // 4. Create final book with best synopsis, categories and all editions
-
+    // 4. Create final book with best synopsis, subjects and all editions
     return {
       ...mainBook,
       synopsis: this.getBestField("synopsis", [mainBook, ...relatedEditions]),
-      // Combine unique categories from all related editions
-      categories: Array.from(new Set([
-        ...(mainBook.categories || []),
-        ...relatedEditions.flatMap(book => book.categories || [])
-      ])),
+      // Clean the subjects and add proper spacing
+      subjects: (mainBook.subjects || [])
+        .join(' ')  // Join all subjects
+        .split(/(?=[A-Z])/)  // Split on capital letters
+        .map(cat => cat.trim())
+        .filter(cat => 
+          cat.length > 2 && 
+          !cat.includes('Reading Level') &&
+          !cat.includes('fiction') &&
+          !cat.match(/^[A-Z]+$/)
+        )
+        .filter((cat, index, array) => array.indexOf(cat) === index)
+        .sort()
+        .join(', '),  // Join with comma and space
       editions: [
         ...relatedEditions.filter((book) => book.isbn13 != mainBook.isbn13 && this.isCompleteEdition(book)),
       ],
@@ -71,7 +78,6 @@ export const bookDetailsService = {
       image: this.getBestField("image", validBooks)
         ?.replace(/zoom=[1-5]/, "zoom=6")
         .replace("&edge=curl", ""),
-      categories: this.getBestField("categories", validBooks),
       // Store all valid editions, including the original books
       editions: validBooks.map((book) => ({
         ...book,
@@ -142,8 +148,6 @@ export const bookDetailsService = {
           return 0;
         }
 
-
-
         return text.length;
       },
 
@@ -162,23 +166,6 @@ export const bookDetailsService = {
 
         // Non-Google images get lowest priority
         return 3;
-      },
-
-      categories: (cats, allBooks, book) => {
-        if (!cats?.length) return 0;
-        
-        // Get all categories from books by the same author
-        const bookAuthor = book.authors?.[0]?.toLowerCase();
-        if (!bookAuthor) return 0;
-
-        const allCategories = new Set<string>();
-        allBooks
-          .filter(b => b.authors?.[0]?.toLowerCase() === bookAuthor)
-          .forEach(b => b.categories?.forEach(cat => allCategories.add(cat)));
-
-        // Score based on how many of this book's categories are in the complete set
-        const validCategories = cats.filter(cat => allCategories.has(cat));
-        return validCategories.length * 1000 + allCategories.size;
       },
     };
 

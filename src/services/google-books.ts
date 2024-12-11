@@ -23,7 +23,7 @@ export const googleBooksService = {
         synopsis: book.description,
         image: book.imageLinks?.extraLarge?.replace("http:", "https:"),
         pages: book.pageCount,
-        categories: book.categories,
+        subjects: book.subjects,
         rating: book.averageRating,
         language: book.language,
       };
