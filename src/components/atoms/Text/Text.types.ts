@@ -1,4 +1,3 @@
-import type { ElementType, ReactNode } from 'react';
 
 export type TextVariant = 
   | 'h1' 
@@ -9,10 +8,13 @@ export type TextVariant =
   | 'caption';
 
 export interface TextProps {
-  variant?: 'h1' | 'h2' | 'h3' | 'body' | 'caption' | 'link';
-  children: ReactNode;
+  variant: 'h1' | 'h2' | 'h3' | 'body' | 'label';
+  children?: React.ReactNode;
   className?: string;
   color?: 'primary' | 'secondary' | 'inverse';
-  as?: ElementType;
+  as?: React.ElementType;
   onClick?: () => void;
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
 } 

@@ -1,8 +1,8 @@
 export interface Book {
-  isbn13: string;
-  title: string;
-  authors: string[];
-  publisher: string;
+  isbn13?: string;
+  title?: string;
+  authors?: string[];
+  publisher?: string;
   published_date?: string;
   synopsis?: string;
   image?: string;
@@ -10,6 +10,9 @@ export interface Book {
   edition?: string;
   related?: string[];
   binding?: string;
+  categories?: string[];
+  rating?: number;
+  language?: string;
 }
 
 export interface SearchResponse {

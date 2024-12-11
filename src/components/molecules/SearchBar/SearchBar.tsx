@@ -1,22 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { Input } from '@/components/atoms';
-import { BookSearch } from '@/components/molecules';
-import { useDebounce } from '@/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/atoms';
+import { BookSearch } from '@/components/molecules/BookSearch';
+import { bookService } from '@/services/book-search';
+import { useDebounce } from '@/hooks/useDebounce';
 import type { Book } from '@/types/book';
 import './SearchBar.css';
-import { isbndbService } from '@/services/isbndb';
 
 export const SearchBar = () => {
-  const [searchResults, setSearchResults] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState<Book[]>([]);
   const router = useRouter();
 
-  const handleSearch = async (query: string) => {
-    if (!query) {
+  const debouncedSearch = useDebounce(async (query: string) => {
+    if (!query.trim()) {
       setSearchResults([]);
       setIsOpen(false);
       return;
@@ -24,24 +24,20 @@ export const SearchBar = () => {
 
     setIsLoading(true);
     try {
-      const { books } = await isbndbService.searchBooks(query);
-      // Take only top 5 results
-      setSearchResults(books.slice(0, 5));
+      const results = await bookService.searchBooks(query);
+      setSearchResults(results.slice(0, 5)); // Take top 5 results
       setIsOpen(true);
     } catch (error) {
-      console.error('Search failed:', error);
+      console.error('Search error:', error);
       setSearchResults([]);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const debouncedSearch = useDebounce(handleSearch, 300);
+  }, 300);
 
   const handleSelect = (book: Book) => {
-    router.push(`/books/${book.isbn13}`);
     setIsOpen(false);
-    setSearchResults([]);
+    router.push(`/books/${book.isbn13}`);
   };
 
   return (
@@ -61,7 +57,7 @@ export const SearchBar = () => {
           ) : searchResults.length > 0 ? (
             searchResults.map((book) => (
               <div
-                key={book.isbn13}
+                key={`${book.isbn13}-${book.title}`}
                 className="search-result-item"
                 onClick={() => handleSelect(book)}
               >

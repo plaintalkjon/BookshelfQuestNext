@@ -8,7 +8,7 @@ export const BookSearch = ({ book, onClick }: BookSearchProps) => (
   <div className="book-search" onClick={onClick}>
     <Image 
       src={book.image || '/images/default-book-cover.png'} 
-      alt={book.title}
+      alt={book.title || 'Book Title'}
       className="book-search-cover"
       width={50}
       height={75}

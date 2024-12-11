@@ -25,8 +25,8 @@ export const BookInfo = ({
     <div className="book-details">
       <Text variant="body">{title}</Text>
       <Text variant="body">By {authors.join(', ')}</Text>
-      {publisher && <Text variant="caption">{publisher}</Text>}
-      {publishedDate && <Text variant="caption">{publishedDate}</Text>}
+      {publisher && <Text variant="body">{publisher}</Text>}
+      {publishedDate && <Text variant="body">{publishedDate}</Text>}
     </div>
   </div>
 ); 

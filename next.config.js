@@ -1,18 +1,18 @@
-const createMDX = require('@next/mdx');
-
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [],
-  },
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   images: {
-    domains: ['images.isbndb.com']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'books.google.com',
+        pathname: '/books/content/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.isbndb.com',
+      }
+    ],
   },
 };
 
-module.exports = withMDX(nextConfig); 
+module.exports = nextConfig; 
