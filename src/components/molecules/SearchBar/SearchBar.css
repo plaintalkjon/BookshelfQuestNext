@@ -28,6 +28,5 @@
 .search-loading,
 .search-no-results {
   padding: 1rem;
-  text-align: center;
   color: var(--color-text-secondary);
 } 

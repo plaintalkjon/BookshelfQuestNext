@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import { Input } from '@/components/atoms';
-import { BookInfo } from '@/components/molecules/BookInfo';
-import { isbndbService } from '@/services/isbndb';
+import { BookSearch } from '@/components/molecules';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
 import type { Book } from '@/types/book';
 import './SearchBar.css';
+import { isbndbService } from '@/services/isbndb';
 
 export const SearchBar = () => {
   const [searchResults, setSearchResults] = useState<Book[]>([]);
@@ -65,13 +65,7 @@ export const SearchBar = () => {
                 className="search-result-item"
                 onClick={() => handleSelect(book)}
               >
-                <BookInfo
-                  title={book.title}
-                  authors={book.authors}
-                  coverUrl={book.image}
-                  imageWidth={50}
-                  imageHeight={75}
-                />
+                <BookSearch book={book} />
               </div>
             ))
           ) : (

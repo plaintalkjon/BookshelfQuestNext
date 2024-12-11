@@ -6,3 +6,5 @@ export { BookInfo } from './BookInfo/BookInfo';
 export type { BookInfoProps } from './BookInfo/BookInfo.types';
 export { SearchBar } from './SearchBar/SearchBar';
 export type { SearchBarProps } from './SearchBar/SearchBar.types';
+export { BookSearch } from './BookSearch';
+export type { BookSearchProps } from './BookSearch/BookSearch.types';

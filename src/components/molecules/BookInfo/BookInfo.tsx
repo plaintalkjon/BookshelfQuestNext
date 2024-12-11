@@ -14,7 +14,7 @@ export const BookInfo = ({
     <Image 
       src={coverUrl || '/images/default-book-cover.png'} 
       alt={title}
-      className="book-cover"
+      className={imageWidth <= 100? "book-cover-search-bar" : "book-cover"}
       width={200}
       height={300}
       style={{

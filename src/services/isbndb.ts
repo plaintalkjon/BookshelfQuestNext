@@ -68,18 +68,19 @@ export const isbndbService = {
   // Get book by ISBN
   async getBookByIsbn(isbn: string): Promise<Book | null> {
     try {
-      const data = await isbndb.fetch(`/book/${isbn}`);
+      const response = await isbndb.fetch(`/book/${isbn}`);
+      const data = response.book;  // Access the nested book object
+      console.log(data);
       return {
         isbn13: data.isbn13,
         title: data.title,
         authors: data.authors || [],
         pages: data.pages,
         publisher: data.publisher,
-        published_date: data.published_date,
+        published_date: data.date_published,
         edition: data.edition,
         synopsis: data.synopsis,
         image: data.image,
-        related: data.related,
         binding: data.binding
       };
     } catch (error) {

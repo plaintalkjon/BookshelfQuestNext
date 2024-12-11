@@ -1,8 +1,6 @@
-import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
-import { BookDetails } from '@/components/templates';
-import { isbndbService } from '@/services/isbndb';
-import { Loading } from '@/components/atoms';
+import { BookDetails } from "@/components/templates";
+import { isbndbService } from "@/services/isbndb";
+import { notFound } from "next/navigation";
 
 interface BookPageProps {
   params: {
@@ -10,20 +8,13 @@ interface BookPageProps {
   };
 }
 
-export default function BookPage({ params }: BookPageProps) {
-  return (
-    <Suspense fallback={<Loading />}>
-      <BookContent isbn={params.isbn} />
-    </Suspense>
-  );
-}
+export default async function BookPage({ params }: BookPageProps) {
+  const resolvedParams = params;
+  const book = await isbndbService.getBookByIsbn(resolvedParams.isbn);
 
-async function BookContent({ isbn }: { isbn: string }) {
-  const book = await isbndbService.getBookByIsbn(isbn);
-  console.log("book", book);
   if (!book) {
     notFound();
   }
 
   return <BookDetails book={book} />;
-} 
+}
