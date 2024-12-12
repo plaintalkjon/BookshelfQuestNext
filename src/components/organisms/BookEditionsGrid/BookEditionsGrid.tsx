@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -24,8 +26,20 @@ export const BookEditionsGrid = ({ editions }: BookEditionsGridProps) => {
     return () => window.removeEventListener('resize', calculateInitialCount);
   }, []);
 
-  const visibleEditions = showAll ? editions : editions.slice(0, initialCount);
-
+  const visibleEditions = showAll 
+    ? editions.sort((a, b) => {
+        const yearA = a.date_published?.toString().match(/\d{4}/)?.[0] || '0';
+        const yearB = b.date_published?.toString().match(/\d{4}/)?.[0] || '0';
+        return Number(yearB) - Number(yearA); // Sort descending (newest first)
+      })
+    : editions
+        .sort((a, b) => {
+          const yearA = a.date_published?.toString().match(/\d{4}/)?.[0] || '0';
+          const yearB = b.date_published?.toString().match(/\d{4}/)?.[0] || '0';
+          return Number(yearB) - Number(yearA);
+        })
+        .slice(0, initialCount);
+        
   return (
     <div className="editions-section">
       <div className="editions-grid" ref={gridRef}>
@@ -46,7 +60,10 @@ export const BookEditionsGrid = ({ editions }: BookEditionsGridProps) => {
             </div>
             <div className="edition-info">
               <Text variant="label">{edition.publisher}</Text>
-              <Text variant="body">{edition.date_published}</Text>
+              <Text variant="body">
+                {edition?.date_published?.toString().match(/\d{4}/)?.[0] || ''}
+              </Text>
+              <Text variant="body">{edition.binding}</Text>
             </div>
           </Link>
         ))}

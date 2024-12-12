@@ -29,6 +29,17 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
             </Text>
           </div>
 
+          {(book.publisher || book.date_published || book.binding) && (
+            <div className="book-publisher-info">
+              <Text variant="h2">Publication Details</Text>
+              <div className="publisher-details">
+                {book.publisher && <Text variant="body">Publisher: {book.publisher}</Text>}
+                {book.date_published && <Text variant="body">Published: {book.date_published}</Text>}
+                {book.binding && <Text variant="body">Format: {book.binding}</Text>}
+              </div>
+            </div>
+          )}
+
           {book.synopsis && (
             <div className="book-details-synopsis">
               <Text

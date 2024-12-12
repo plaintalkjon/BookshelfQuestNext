@@ -6,8 +6,6 @@
 }
 
 .book-search-cover {
-  width: 50px;
-  height: 75px;
   object-fit: cover;
   border-radius: 4px;
   box-shadow: var(--shadow-sm);

@@ -10,7 +10,7 @@ interface BookPageProps {
 
 export default async function BookPage({ params }: BookPageProps) {
     const book = await bookDetailsService.getBookDetails(params.isbn);
-
+  
   // If neither service found the book, 404
   if (!book) {
     notFound();

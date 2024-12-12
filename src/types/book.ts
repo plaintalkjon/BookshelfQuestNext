@@ -8,12 +8,13 @@ export interface Book {
   image?: string;
   pages?: number;
   edition?: string;
-  related?: string[];
   binding?: string;
   subjects?: string[];
   rating?: number;
   language?: string;
   editions?: Book[];
+  excerpt?: string;
+  related?: {type: string};
 }
 
 export interface SearchResponse {
@@ -26,4 +27,4 @@ export interface BookSearchParams {
   query: string;
   page?: number;
   limit?: number;
-} 
+}

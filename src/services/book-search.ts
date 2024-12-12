@@ -1,6 +1,7 @@
 import { isbndbService } from './isbndb';
 import { googleBooksService } from './google-books';
 import type { Book } from '@/types/book';
+import { bookUtils } from './book-utils';
 
 export const bookService = {
   async searchBooks(query: string) {
@@ -12,8 +13,8 @@ export const bookService = {
 
     // Combine and validate all books
     const allBooks = [...isbndbResults.books, ...googleResults.books]
-      .filter(isValidBook);
-    console.log("googleResults.books", googleResults.books);
+      .filter(bookUtils.isCompleteBook);
+
     // Group books by author
     const authorGroups = allBooks.reduce((acc, book) => {
       const author = normalizeAuthor(book.authors?.[0] || 'Unknown');
@@ -35,14 +36,14 @@ export const bookService = {
       
       return acc;
     }, {} as Record<string, { books: Book[], authorCount: number, bestBook: Book | null }>);
-    console.log("authorGroups", authorGroups);
+
     // Sort by author frequency and return best books
     return Object.values(authorGroups)
       .sort((a, b) => b.authorCount - a.authorCount)
       .map(group => group.bestBook)
       .filter((book): book is Book => book !== null);
   }
-}; 
+};
 
 export function scoreBookData(book: Book): number {
   let score = 0;
@@ -88,10 +89,6 @@ function normalizeBookKey(book: Book): string {
   const normalizedTitle = book.title?.toLowerCase().trim() || '';
   const firstAuthor = book.authors?.[0]?.toLowerCase().trim() || '';
   return `${normalizedTitle}|${firstAuthor}`;
-} 
-
-function isValidBook(book: Partial<Book>): book is Book {
-  return !!book.isbn13 && !!book.title;
 } 
 
 function normalizeAuthor(author: string): string {

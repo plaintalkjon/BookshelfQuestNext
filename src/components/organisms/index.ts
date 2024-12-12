@@ -7,3 +7,5 @@ export type { ArticleShowcaseProps } from './ArticleShowcase';
 export { BookEditionsGrid } from './BookEditionsGrid';
 export type { BookEditionsGridProps } from './BookEditionsGrid'; 
 
+export { SearchShowcase } from './SearchShowcase';
+export type { SearchShowcaseProps } from './SearchShowcase';

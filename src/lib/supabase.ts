@@ -10,14 +10,25 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
     storageKey: 'sb-auth-token',
     storage: {
       getItem: (key) => {
-        const value = document.cookie.match(new RegExp(`${key}=([^;]+)`))?.[1] ?? null;
-        return value;
+        try {
+          // Check if we are in the browser environment before using `document`
+          if (typeof document !== 'undefined') {
+            return document.cookie.match(new RegExp(`${key}=([^;]+)`))?.[1] ?? null;
+          }
+          return null;  // If not in the browser, return null
+        } catch {
+          return null;
+        }
       },
       setItem: (key, value) => {
-        document.cookie = `${key}=${value}; path=/; max-age=86400; secure; samesite=lax`;
+        try {
+          document.cookie = `${key}=${value}; path=/; max-age=31536000`;
+        } catch {}
       },
       removeItem: (key) => {
-        document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        try {
+          document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        } catch {}
       },
     },
   },

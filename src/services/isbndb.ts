@@ -6,7 +6,6 @@ export const isbndbService = {
     try {
       const response = await isbndb.fetch(`/book/${isbn}`);
       const data = response.book;
-      console.log("data", data);
       return {
         isbn13: data.isbn13,
         title: data.title,

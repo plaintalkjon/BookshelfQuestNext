@@ -29,4 +29,18 @@
 .search-no-results {
   padding: 1rem;
   color: var(--color-text-secondary);
+}
+
+.show-all-results {
+  padding: 12px;
+  text-align: center;
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  border-top: 1px solid var(--color-border);
+  text-decoration: none;
+}
+
+.show-all-results:hover {
+  background-color: var(--color-background-hover);
 } 
