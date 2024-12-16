@@ -26,10 +26,10 @@ export const isbndbService = {
     }
   },
 
-  async searchBooks(query: string): Promise<SearchResponse> {
+  async searchBooks(query: string, page: number = 1): Promise<SearchResponse> {
     try {
       const data = await isbndb.fetch(
-        `/books/${encodeURIComponent(query)}?page=1&pageSize=200&language=en`
+        `/books/${encodeURIComponent(query)}?page=${page}&pageSize=200&language=en`
       );
       return {
         books: data.books || [],

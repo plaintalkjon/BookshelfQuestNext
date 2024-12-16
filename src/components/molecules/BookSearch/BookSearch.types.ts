@@ -4,4 +4,5 @@ export interface BookSearchProps {
     book: Book;
     onClick?: () => void;
     href?: string;
+    detailed?: boolean;
   }

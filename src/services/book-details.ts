@@ -7,12 +7,11 @@ export const bookDetailsService = {
     const isbndbBook = await isbndbService.getBookByIsbn(isbn);
     
     if (isbndbBook && bookUtils.isCompleteBook(isbndbBook)) {
-      const isbndbEditions = await isbndbService.searchBooks(isbndbBook.title || '');
+      const relatedEditions = await bookUtils.getAllRelatedEditions(isbndbBook);
 
-      // Get all subjects from main book and editions
       const subjectFrequency = new Map<string, number>();
       
-      [...isbndbEditions.books, isbndbBook].forEach(book => {
+      [...relatedEditions, isbndbBook].forEach(book => {
         book.subjects?.forEach(subject => {
           if (subject.length > 2 && !subject.includes('Kindle')) {
             const count = subjectFrequency.get(subject) || 0;
@@ -27,10 +26,7 @@ export const bookDetailsService = {
         .slice(0, 5)
         .map(([subject]) => subject);
 
-      const relatedEditions = isbndbEditions.books
-        .filter(book => bookUtils.isRelatedEdition(book, isbndbBook))
-        .filter(book => book.isbn13 !== isbndbBook.isbn13)
-        .filter(book => bookUtils.isCompleteBook(book));
+
 
       return {
         ...isbndbBook,

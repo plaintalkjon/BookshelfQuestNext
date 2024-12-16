@@ -1,22 +1,20 @@
 import { isbndbService } from './isbndb';
-import { googleBooksService } from './google-books';
 import type { Book } from '@/types/book';
 import { bookUtils } from './book-utils';
 
+
+// THIS SERVICE IS STRICTLY TO FIND THE BEST 5 BOOKS FOR THE SEARCH BAR
 export const bookService = {
   async searchBooks(query: string) {
     // Search both services in parallel
-    const [isbndbResults, googleResults] = await Promise.all([
-      isbndbService.searchBooks(query),
-      googleBooksService.searchBooks(query)
-    ]);
+    const isbndbResults = await isbndbService.searchBooks(query);
 
     // Combine and validate all books
-    const allBooks = [...isbndbResults.books, ...googleResults.books]
+    const filteredBooks = isbndbResults.books
       .filter(bookUtils.isCompleteBook);
 
     // Group books by author
-    const authorGroups = allBooks.reduce((acc, book) => {
+    const authorGroups = filteredBooks.reduce((acc, book) => {
       const author = normalizeAuthor(book.authors?.[0] || 'Unknown');
       if (!acc[author]) {
         acc[author] = {
@@ -44,6 +42,13 @@ export const bookService = {
       .filter((book): book is Book => book !== null);
   }
 };
+
+export async function findAllBooks(query: string, page: number = 1) {
+  const isbndbResults = await isbndbService.searchBooks(query, page);
+  const filteredBooks = bookUtils.isbn13DuplicateRemover(isbndbResults.books
+    .filter(bookUtils.isCompleteBook));
+  return filteredBooks;
+}
 
 export function scoreBookData(book: Book): number {
   let score = 0;
