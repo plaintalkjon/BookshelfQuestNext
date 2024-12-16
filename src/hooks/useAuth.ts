@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { toast } from "react-hot-toast";
 import type { AppRoute } from "@/types/routes";
@@ -23,6 +23,14 @@ interface SignupCredentials {
 export const useAuth = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      return user;
+    }
+  });
 
   const handleNavigation = (path: AppRoute) => {
     router.push(path);
@@ -160,6 +168,7 @@ export const useAuth = () => {
   });
 
   return {
+    user,
     login,
     signup,
     forgotPassword,

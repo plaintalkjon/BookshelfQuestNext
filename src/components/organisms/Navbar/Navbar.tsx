@@ -16,8 +16,7 @@ const Navbar = () => {
 
   const navItems: Array<{ label: string; path: AppRoute }> = [
     { label: "Home", path: "/" },
-    { label: "Library", path: "/library" },
-    { label: "Community", path: "/community" },
+    { label: "Shelf", path: "/shelf" },
     { label: "Articles", path: "/articles" },
     { label: "Settings", path: "/settings" }
   ];

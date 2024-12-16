@@ -9,3 +9,7 @@ export type { BookEditionsGridProps } from './BookEditionsGrid';
 
 export { SearchShowcase } from './SearchShowcase';
 export type { SearchShowcaseProps } from './SearchShowcase';
+
+export { ShelfShowcase } from './ShelfShowcase';
+export type { ShelfShowcaseProps } from './ShelfShowcase';
+

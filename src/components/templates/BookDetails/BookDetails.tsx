@@ -6,7 +6,32 @@ import "./BookDetails.css";
 import { BookDetailsProps } from "./BookDetails.types";
 import DOMPurify from "isomorphic-dompurify";
 import { BookEditionsGrid } from "@/components/organisms/BookEditionsGrid/BookEditionsGrid";
+import { useState } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 export const BookDetails = ({ book }: BookDetailsProps) => {
+  const [isAdding, setIsAdding] = useState(false);
+  const supabase = createClientComponentClient();
+
+  const addToShelf = async () => {
+    setIsAdding(true);
+    try {
+      const { error } = await supabase
+        .from('user_books')
+        .insert({
+          book_isbn: book.isbn13,
+        });
+
+      if (error) throw error;
+      // Show success message
+    } catch (error) {
+      console.error('Error adding book to shelf:', error);
+      // Show error message
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   return (
     <div className="book-details-container">
       <div className="book-header">
@@ -52,7 +77,9 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
           )}
 
           <div className="book-actions">
-            <Button variant="primary">Add to Library</Button>
+            <Button variant="primary" onClick={addToShelf} disabled={isAdding}>
+              {isAdding ? 'Adding...' : 'Add to Shelf'}
+            </Button>
             <Button variant="secondary">Add to Reading List</Button>
           </div>
         </div>
