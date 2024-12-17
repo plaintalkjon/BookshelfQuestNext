@@ -7,7 +7,7 @@ export const BookCard = ({ book, onClick, href, detailed = false }: BookCardProp
     <div className="book-search" onClick={onClick}>
       <Image 
         src={book.image || '/images/default-book-cover.png'} 
-        alt={book.title || 'Book Title'}
+        alt={book.title || 'Book Cover'}
         className="book-search-cover"
         width={100}
         height={150}
