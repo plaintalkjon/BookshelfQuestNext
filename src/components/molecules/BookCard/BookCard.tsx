@@ -1,8 +1,8 @@
 import { Text, Image } from '@/components/atoms';
-import './BookSearch.css';
-import type { BookSearchProps } from './BookSearch.types';
+import './BookCard.css';
+import type { BookCardProps } from './BookCard.types';
 import Link from 'next/link';
-export const BookSearch = ({ book, onClick, href, detailed = false }: BookSearchProps) => {
+export const BookCard = ({ book, onClick, href, detailed = false }: BookCardProps) => {
   const content = (
     <div className="book-search" onClick={onClick}>
       <Image 

@@ -1,6 +1,6 @@
 import type { Book } from '@/types/book';
 
-export interface BookSearchProps {
+export interface BookCardProps {
     book: Book;
     onClick?: () => void;
     href?: string;

@@ -1,5 +1,5 @@
 'use client';
-import { BookSearch } from '@/components/molecules/BookSearch';
+import { BookCard } from '@/components/molecules/BookCard';
 import { Text } from '@/components/atoms';
 import './ShelfShowcase.css';
 import { ShelfShowcaseProps } from './ShelfShocase.types';
@@ -10,7 +10,7 @@ export function ShelfShowcase({ books }: ShelfShowcaseProps) {
       <Text variant="h1">My Bookshelf</Text>
       <div className="shelf-grid">
         {books.map((entry) => (
-          <BookSearch 
+          <BookCard 
             key={entry.id}
             book={entry.book}
             href={`/books/${entry.book_isbn}`}

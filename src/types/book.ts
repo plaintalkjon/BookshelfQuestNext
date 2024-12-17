@@ -23,7 +23,7 @@ export interface SearchResponse {
 }
 
 // For pagination and search params
-export interface BookSearchParams {
+export interface BookCardParams {
   query: string;
   page?: number;
   limit?: number;

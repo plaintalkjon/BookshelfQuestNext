@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/atoms';
-import { BookSearch } from '@/components/molecules/BookSearch';
+import { BookCard } from '@/components/molecules/BookCard';
 import { bookService } from '@/services/book-search';
 import { useDebounce } from '@/hooks/useDebounce';
 import type { Book } from '@/types/book';
@@ -87,7 +87,7 @@ export const SearchBar = () => {
                   className="search-result-item"
                   onClick={() => handleSelect(book)}
                 >
-                  <BookSearch book={book} />
+                  <BookCard book={book} />
                 </div>
               ))}
               <Link 

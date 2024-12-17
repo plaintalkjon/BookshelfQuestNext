@@ -1,20 +1,24 @@
-import { notFound } from 'next/navigation';
-import { BookDetails } from '@/components/templates';
-import { bookDetailsService } from '@/services/book-details';
+import { BookDetails } from "@/components/templates";
+import { bookDetailsService } from "@/services/book-details";
+import { notFound } from "next/navigation";
+import type { Book } from "@/types/book";
 
-interface BookPageProps {
+// Correct type for the page props
+interface PageProps {
   params: {
     isbn: string;
   };
 }
 
-export default async function BookPage({ params }: BookPageProps) {
-    const book = await bookDetailsService.getBookDetails(params.isbn);
-  
-  // If neither service found the book, 404
+// Ensure you're handling async behavior properly
+export default async function BookPage({ params }: PageProps) {
+  console.log(params); // Debug to see the shape of `params`
+  const { isbn } = params; // Extract isbn from params
+  const book = await bookDetailsService.getBookDetails(isbn);
+
   if (!book) {
     notFound();
   }
 
-  return <BookDetails book={book} />;
+  return <BookDetails book={book as Book} />;
 }

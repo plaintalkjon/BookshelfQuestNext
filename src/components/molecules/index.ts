@@ -6,5 +6,5 @@ export type { ArticleCardProps } from './ArticleCard/ArticleCard.types';
 
 export { SearchBar } from './SearchBar/SearchBar';
 export type { SearchBarProps } from './SearchBar/SearchBar.types';
-export { BookSearch } from './BookSearch';
-export type { BookSearchProps } from './BookSearch/BookSearch.types';
+export { BookCard } from './BookCard';
+export type { BookCardProps } from './BookCard/BookCard.types';

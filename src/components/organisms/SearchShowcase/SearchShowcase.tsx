@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
-import { BookSearch } from "@/components/molecules/BookSearch";
+import { BookCard } from "@/components/molecules/BookCard";
 import { Text } from "@/components/atoms";
-import { useAuth } from "@/hooks/useAuth";
-import { useShelf } from "@/hooks/useShelf";
 import "./SearchShowcase.css";
 import type { Book } from "@/types/book";
 import { findAllBooks } from "@/services/book-search";
@@ -18,8 +16,6 @@ export function SearchShowcase({
   query,
   initialBooks = [],
 }: SearchShowcaseProps) {
-  const { user } = useAuth();
-  const { addToShelf } = useShelf();
   const [books, setBooks] = useState(initialBooks);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -53,7 +49,7 @@ export function SearchShowcase({
       <Text variant="h1">Search Results for &quot;{query}&quot;</Text>
       <div className="search-results-grid">
         {books.map((book) => (
-          <BookSearch
+          <BookCard
             key={`${book.isbn13}-${book.title}-${page}`}
             book={book}
             href={`/books/${book.isbn13}`}
