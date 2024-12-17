@@ -40,7 +40,7 @@ export const ArticleCard = ({
         <Text variant="body" className="article-card-description">
           {description}
         </Text>
-        <Text variant="caption" className="article-card-date">
+        <Text variant="body" className="article-card-date">
           {new Date(date).toLocaleDateString()}
         </Text>
       </div>

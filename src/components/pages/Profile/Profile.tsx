@@ -14,7 +14,7 @@ export const Profile = ({ profile }: ProfileProps) => {
       <div className="profile-header">
         <Text variant="h1">{profile.display_name}</Text>
         <Text variant="body">@{profile.username}</Text>
-        <Text variant="caption">
+        <Text variant="body">
           Member since {new Date(profile.created_at).toLocaleDateString()}
         </Text>
       </div>

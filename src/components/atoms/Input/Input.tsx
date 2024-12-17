@@ -43,7 +43,7 @@ export const Input = ({
       </div>
       
       {error && (
-        <Text variant="caption" className="input-error-message">
+        <Text variant="body" className="input-error-message">
           {error}
         </Text>
       )}
