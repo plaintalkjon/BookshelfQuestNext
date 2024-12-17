@@ -38,7 +38,7 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
         <div className="book-details-cover">
           <Image
             src={book.image || "/images/default-cover.png"}
-            alt={book.title}
+            alt={book.title || "Book Cover"}
             width={300}
             height={450}
             priority
