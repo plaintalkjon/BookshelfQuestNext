@@ -15,7 +15,6 @@ export const Home = ({ articles }: { articles: Article[] }) => {
   if (isLoading) {
     return <div className="home-loading">Loading...</div>;
   }
-
   return (
     <div className="home-container">
       {user ? (
@@ -35,7 +34,7 @@ export const Home = ({ articles }: { articles: Article[] }) => {
             </div>
           </div>
 
-          <ArticleShowcase gridMinWidth="350px" title={"Newest Articles"} direction="row" articles={articles} />
+          <ArticleShowcase title={"Newest Articles"} articles={articles} />
         </>
       ) : (
         // Public landing page
@@ -53,6 +52,8 @@ export const Home = ({ articles }: { articles: Article[] }) => {
               Get Started
             </Button>
           </header>
+          <ArticleShowcase title={"Newest Articles"} articles={articles} />
+
         </>
       )}
     </div>

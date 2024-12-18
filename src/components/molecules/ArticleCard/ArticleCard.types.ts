@@ -4,5 +4,4 @@ export interface ArticleCardProps {
   imageUrl: string;
   date: string;
   slug: string;
-  className?: string;
 } 

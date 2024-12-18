@@ -3,21 +3,16 @@
 import Link from 'next/link';
 import { Text, Image } from '@/components/atoms';
 import './ArticleCard.css';
-
-interface ArticleCardProps {
-  title: string;
-  description: string;
-  imageUrl: string;
-  date: string;
-  slug: string;
-}
+import type { ArticleCardProps } from './ArticleCard.types';
 
 export function ArticleCard({ title, description, imageUrl, date, slug }: ArticleCardProps) {
-  // Format date in a consistent way
+  console.log('ArticleCard props:', { title, description, imageUrl, date, slug });
+
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'UTC'
   });
 
   return (

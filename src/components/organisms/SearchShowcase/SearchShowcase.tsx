@@ -3,18 +3,13 @@ import { useState } from "react";
 import { BookCard } from "@/components/molecules/BookCard";
 import { Text } from "@/components/atoms";
 import "./SearchShowcase.css";
-import type { Book } from "@/types/book";
 import { findAllBooks } from "@/services/book-search";
 import { bookUtils } from "@/services/book-utils";
-
-interface SearchShowcaseProps {
-  query: string;
-  initialBooks: Book[];
-}
+import type { SearchShowcaseProps } from "./SearchShowcase.types";
 
 export function SearchShowcase({
   query,
-  initialBooks = [],
+  books: initialBooks = [],
 }: SearchShowcaseProps) {
   const [books, setBooks] = useState(initialBooks);
   const [page, setPage] = useState(1);

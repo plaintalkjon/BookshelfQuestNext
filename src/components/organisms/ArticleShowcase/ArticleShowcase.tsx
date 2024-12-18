@@ -9,6 +9,10 @@ export const ArticleShowcase = ({
   gridMinWidth = '300px',
   articles,
 }: ArticleShowcaseProps) => {
+  console.group("ArticleShowcase");
+  console.log("articles", articles);
+ 
+
   return (
     <div className="article-showcase">
       {title && <Text variant="h2">{title}</Text>}
@@ -21,12 +25,13 @@ export const ArticleShowcase = ({
         }}
       >
         {articles.map((article) => (
+          
           <ArticleCard
             key={article.slug}
             title={article.title}
             description={article.description}
-            imageUrl={article.thumbnail}
             date={article.date}
+            imageUrl={article.thumbnail}
             slug={article.slug}
           />
         ))}
