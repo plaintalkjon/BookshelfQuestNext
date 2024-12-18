@@ -10,7 +10,10 @@ const articlesDirectory = path.join(process.cwd(), 'src/content/articles');
 
 export async function getArticleBySlug(slug: string): Promise<MDXArticle | null> {
   try {
-    const fullPath = path.join(articlesDirectory, `${slug}.mdx`);
+    // Clean the slug first
+    const cleanSlug = slug.replace(/\.js\.map$/, '');
+    const fullPath = path.join(process.cwd(), 'src/content/articles', `${cleanSlug}.mdx`);
+    
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     const { frontmatter, content } = await compileMDX<{
@@ -38,7 +41,7 @@ export async function getArticleBySlug(slug: string): Promise<MDXArticle | null>
       content
     };
   } catch (error) {
-    console.error('Error loading article:', error);
+    console.error('Error reading article:', error);
     return null;
   }
 }

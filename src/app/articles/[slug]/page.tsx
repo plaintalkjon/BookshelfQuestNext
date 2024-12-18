@@ -1,6 +1,9 @@
 import { notFound } from 'next/navigation';
 import { Article } from '@/components/templates';
 import { getArticleBySlug } from '@/utils/mdx';
+import path from 'path';
+
+const articlesDirectory = path.join(process.cwd(), 'src/content/articles');
 
 interface ArticlePageProps {
   params: Promise<{
@@ -10,11 +13,20 @@ interface ArticlePageProps {
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const resolvedParams = await params;
+  console.log('Raw slug:', resolvedParams.slug);
+  
+  if (resolvedParams.slug.includes('.js.map')) {
+    notFound();
+  }
+
   const article = await getArticleBySlug(resolvedParams.slug);
   
   if (!article) {
     notFound();
   }
+
+  console.log('Attempting to read:', resolvedParams.slug);
+  console.log('Full path:', path.join(articlesDirectory, `${resolvedParams.slug}.mdx`));
 
   return (
     <Article

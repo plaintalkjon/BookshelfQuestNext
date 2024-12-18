@@ -54,7 +54,6 @@ body {
 
 /* Component Base Styles */
 header {
-  background-color: var(--color-surface);
   color: var(--color-text-inverse);
 }
 

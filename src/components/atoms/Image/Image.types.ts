@@ -1,10 +1,8 @@
-import { ComponentProps } from 'react';
-import NextImage from 'next/image';
-
-export interface ImageProps extends Omit<ComponentProps<typeof NextImage>, 'alt'> {
+export interface ImageProps {
+  src: string;
   alt: string;
+  style?: React.CSSProperties;
   className?: string;
-  fallback?: string;
-  width?: number;
-  height?: number;
-} 
+  caption?: string;
+  captionLink?: string;
+}
