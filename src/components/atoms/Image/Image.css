@@ -39,12 +39,10 @@
 
 .image-container {
   width: 100%;
-  margin: 2rem 0;
 }
 
 .image-wrapper {
   position: relative;
   width: 75%;
-  margin: 0 auto;
   aspect-ratio: 16/9; /* Maintain aspect ratio */
 }

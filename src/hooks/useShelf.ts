@@ -1,54 +1,69 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { toast } from 'react-hot-toast';
 import { useAuth } from './useAuth';
-
-export const useShelf = () => {
+import { isbndbService } from '@/services/isbndb';
+export function useShelf() {
   const queryClient = useQueryClient();
   const supabase = createClientComponentClient();
+  const { user } = useAuth();
 
-  // Query to track shelf contents
-  const { data: shelfItems } = useQuery({
-    queryKey: ['shelf'],
+  // Query to get shelf books
+  const { data: shelfBooks, isLoading } = useQuery({
+    queryKey: ['shelfBooks', user?.id],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data: shelfEntries, error } = await supabase
         .from('user_shelf')
-        .select('*');
+        .select(`*`)
+        .eq('user_id', user?.id);
       if (error) throw error;
-      return data;
+
+      const bookDetails = await isbndbService.getBooksInBatch(
+        shelfEntries.map(entry => entry.book_isbn13)
+      );
+
+      return shelfEntries.map((entry, index) => ({
+        ...entry,
+        book: bookDetails[index]
+      }));
     },
-    // Only fetch if we have a user
-    enabled: !!useAuth().user
+    enabled: !!user
   });
 
+  // Mutation to add book
   const addToShelf = useMutation({
-    mutationFn: async (bookIsbn: string) => {
+    mutationFn: async (book_isbn13: string) => {
       const { error } = await supabase
         .from('user_shelf')
-        .insert({ book_isbn: bookIsbn });
+        .insert({ user_id: user!.id, book_isbn13: book_isbn13 });
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['shelf'] });
+      queryClient.invalidateQueries({ queryKey: ['shelfBooks'] });
+      toast.success('Book added to shelf');
     }
   });
 
+  // Mutation to remove book
   const removeFromShelf = useMutation({
-    mutationFn: async (bookIsbn: string) => {
+    mutationFn: async (book_isbn13: string) => {
       const { error } = await supabase
         .from('user_shelf')
         .delete()
-        .eq('book_isbn', bookIsbn);
+        .match({ user_id: user!.id, book_isbn13: book_isbn13 });
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['shelf'] });
+      queryClient.invalidateQueries({ queryKey: ['shelfBooks'] });
+      toast.success('Book removed from shelf');
     }
   });
 
   return {
-    shelfItems,
+    shelfBooks,
+    isLoading,
     addToShelf,
     removeFromShelf,
-    isInShelf: (isbn: string) => shelfItems?.some(item => item.book_isbn === isbn)
+    isInShelf: (bookId: string) => shelfBooks?.some(book => book.book_id === bookId)
   };
-};
+}

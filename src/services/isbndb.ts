@@ -39,5 +39,17 @@ export const isbndbService = {
       console.error('Search books error:', error);
       return { books: [], total: 0 };
     }
+  },
+
+  async getBooksInBatch(isbns: string[]): Promise<(Book | null)[]> {
+    try {
+      // Use Promise.all to fetch books in parallel
+      return await Promise.all(
+        isbns.map(isbn => this.getBookByIsbn(isbn))
+      );
+    } catch (error) {
+      console.error('Batch fetch error:', error);
+      return isbns.map(() => null);
+    }
   }
 }; 

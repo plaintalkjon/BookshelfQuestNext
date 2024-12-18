@@ -1,6 +1,5 @@
 .book-search {
   display: flex;
-  gap: 1rem;
   width: 100%;
   align-items: center;
 }
@@ -14,6 +13,11 @@
 .book-search-details {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 10px;
   flex: 1;
 } 
+
+.book-search-cover-container {
+  display: flex;
+  flex-direction: column;
+}

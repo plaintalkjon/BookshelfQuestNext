@@ -1,22 +1,20 @@
-/* import { ShelfShowcase } from "@/components/organisms";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { shelfService } from "@/services/shelf";
-import type { Book } from "@/types/book"; */
+'use client';
 
-export default async function ShelfPage() {
-  /* const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+import { ShelfShowcase } from "@/components/organisms";
+import { useAuth } from "@/hooks/useAuth";
+import { useShelf } from "@/hooks/useShelf";
 
-  if (!session) {
-    redirect('/login');
+export default function ShelfPage() {
+  const { isAuthenticated, isLoading } = useAuth();
+  const { shelfBooks, isLoading: booksLoading } = useShelf();
+
+  if (isLoading || booksLoading) {
+    return <div>Loading...</div>;
   }
 
-  const shelfBooks = await shelfService.getShelfBooks(session.user.id);
-  console.log('Shelf books:', shelfBooks); // Debug what we're getting
-*/
-  return <p>Coming Soon</p>;
+  if (!isAuthenticated) {
+    return <div>Please log in to view your shelf</div>;
+  }
+
+  return <ShelfShowcase books={shelfBooks || []} />;
 }

@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { Button, Text } from "@/components/atoms";
 import { Form } from "@/components/molecules";
-import { useAuth } from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import "./Login.css";
 
 export const Login = () => {
   const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
-  const { login, signup, forgotPassword } = useAuth();
+  const { login, signup, forgotPassword } = useLogin();
   const router = useRouter();
 
   const getFields = () => {
