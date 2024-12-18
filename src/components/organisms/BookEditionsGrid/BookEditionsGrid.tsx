@@ -59,7 +59,7 @@ export const BookEditionsGrid = ({ editions }: BookEditionsGridProps) => {
               />
             </div>
             <div className="edition-info">
-              <Text variant="label">{edition.publisher}</Text>
+              <Text variant="body">{edition.publisher}</Text>
               <Text variant="body">
                 {edition?.date_published?.toString().match(/\d{4}/)?.[0] || ''}
               </Text>

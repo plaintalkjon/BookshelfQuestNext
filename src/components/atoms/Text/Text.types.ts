@@ -3,12 +3,15 @@ export type TextVariant =
   | 'h1' 
   | 'h2' 
   | 'h3' 
+  | 'h4'
+  | 'h5'
+  | 'h6'
   | 'body' 
   | 'body-small' 
   | 'caption';
 
 export interface TextProps {
-  variant: 'h1' | 'h2' | 'h3' | 'body' | 'label';
+  variant: TextVariant;
   children?: React.ReactNode;
   className?: string;
   color?: 'primary' | 'secondary' | 'inverse';
