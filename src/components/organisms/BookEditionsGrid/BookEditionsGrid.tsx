@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import { Image } from '@/components/atoms/Image';
 import Link from 'next/link';
 import { Text, Button } from '@/components/atoms';
 import './BookEditionsGrid.css';
@@ -53,9 +53,6 @@ export const BookEditionsGrid = ({ editions }: BookEditionsGridProps) => {
               <Image
                 src={edition.image || '/images/default-cover.png'}
                 alt={edition.title || ''}
-                width={150}
-                height={225}
-                priority={index < 4}
                 variant="medium"
               />
             </div>

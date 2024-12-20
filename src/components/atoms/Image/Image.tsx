@@ -37,7 +37,6 @@ export function Image({
         alt={alt}
         width={variant ? imageWidthAndHeight[variant].width : imageWidthAndHeight.medium.width}
         height={variant ? imageWidthAndHeight[variant].height : imageWidthAndHeight.medium.height}
-        variant={variant}
       />
       {caption && (
         <p className="image-caption">
