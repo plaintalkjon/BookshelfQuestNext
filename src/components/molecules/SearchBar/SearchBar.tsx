@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/atoms';
-import { BookCard } from '@/components/molecules/BookCard';
+import { SearchResultCard } from '@/components/molecules/SearchResultCard';
 import { bookService } from '@/services/book-search';
 import { useDebounce } from '@/hooks/useDebounce';
 import type { Book } from '@/types/book';
@@ -82,13 +82,11 @@ export const SearchBar = () => {
           ) : searchResults.length > 0 ? (
             <>
               {searchResults.map((book) => (
-                <div
+                <SearchResultCard
                   key={`${book.isbn13}-${book.title}`}
-                  className="search-result-item"
+                  book={book}
                   onClick={() => handleSelect(book)}
-                >
-                  <BookCard book={book} />
-                </div>
+                />
               ))}
               <Link 
                 href={`/search?q=${encodeURIComponent(currentQuery)}`}

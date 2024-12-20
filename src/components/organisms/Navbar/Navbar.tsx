@@ -2,8 +2,8 @@
 
 import { Button, Text } from "@/components/atoms";
 import { useUser } from "@/hooks/useUser";
-import { useAuth } from "@/hooks/useAuth";
 import { SearchBar } from "@/components/molecules";
+import { useLogin } from "@/hooks/useLogin";
 import { usePathname, useRouter } from "next/navigation";
 import "./Navbar.css";
 import type { AppRoute } from "@/types/routes";
@@ -12,7 +12,7 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { data: user, isLoading } = useUser();
-  const { logout } = useAuth();
+  const { logout } = useLogin();
 
   const navItems: Array<{ label: string; path: AppRoute }> = [
     { label: "Home", path: "/" },

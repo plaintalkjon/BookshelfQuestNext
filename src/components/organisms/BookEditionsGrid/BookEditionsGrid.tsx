@@ -9,7 +9,7 @@ import { BookEditionsGridProps } from './BookEditionsGrid.types';
 
 export const BookEditionsGrid = ({ editions }: BookEditionsGridProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const [initialCount, setInitialCount] = useState(4);
+  const [initialCount, setInitialCount] = useState(3);
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
@@ -56,6 +56,7 @@ export const BookEditionsGrid = ({ editions }: BookEditionsGridProps) => {
                 width={150}
                 height={225}
                 priority={index < 4}
+                variant="medium"
               />
             </div>
             <div className="edition-info">

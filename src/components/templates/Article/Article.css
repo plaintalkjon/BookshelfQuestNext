@@ -16,12 +16,14 @@
     color: var(--color-text-secondary);
     margin-top: 0.5rem;
   }
-  
-  .article-image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
+
+
+  .article-card-image div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    overflow: hidden;
   }
   
   .article-content {
@@ -55,12 +57,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    align-items: start;
+    align-items: center;
   }
 
   .side-by-side .image-wrapper {
     width: 100%;
-    max-height: 500px;
+    max-width: 600px;
+    margin: 0 auto;
     position: relative;
   }
 

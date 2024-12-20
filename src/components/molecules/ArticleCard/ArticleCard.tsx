@@ -21,7 +21,7 @@ export function ArticleCard({ title, description, imageUrl, date, slug }: Articl
       className="article-card"
     >
       <div className="article-card-image">
-        <Image src={imageUrl} alt={title} />
+        <Image src={imageUrl} alt={title} variant="medium" />
       </div>
       <div className="article-card-content">
         <Text variant="h3">{title}</Text>

@@ -114,10 +114,26 @@ export function useLogin() {
     },
   });
 
+  const logout = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['session'] });
+      router.push('/login');
+      toast.success('Logged out successfully');
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   return {
     login,
     signup,
     forgotPassword,
     resetPassword,
+    logout,
   };
 } 

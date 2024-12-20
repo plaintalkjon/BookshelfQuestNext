@@ -1,11 +1,11 @@
 /* Base styles */
 .book-card {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
+  grid-template-columns: 1fr 3fr;
   padding: 16px;
   background: var(--color-paper);
   border-radius: 8px;
+  gap: 20px;
 }
 
 /* Shared elements */
@@ -13,7 +13,6 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .book-card-cover {
@@ -35,8 +34,11 @@
   gap: 12px;
   cursor: pointer;
   transition: background-color 0.2s;
-  width: 50px;
-  height: 75px;
+  min-height: 100px;
+}
+
+.book-card-search:hover {
+  background: var(--color-surface-variant);
 }
 
 /* Grid variant */
@@ -85,28 +87,16 @@
   position: relative;
 }
 /* Variant-specific image sizes */
-.book-search-detailed {
-  flex-direction: column;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.book-search-detailed .book-search-cover-container {
-  align-self: flex-start;
-  max-width: 600px;  /* Cap width */
-  width: 100%;       /* Allow shrinking */
-}
-
-.book-card-cover-container-detailed {
+.book-card-cover-container-search {
   width: auto;
   height: auto;
-  max-width: 400px;
+  min-width: 150px;
+  max-width: 175px;
+  padding: 10px;
   position: relative;
 }
 
-.book-card-cover-detailed {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+/* Additional spacing for search text */
+.book-card-search .book-card-details {
+  padding: 4px 0;
 }

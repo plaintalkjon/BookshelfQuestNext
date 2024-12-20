@@ -48,7 +48,7 @@ export function SearchShowcase({
             key={`${book.isbn13}-${book.title}-${page}`}
             book={book}
             href={`/books/${book.isbn13}`}
-            detailed
+            
           />
         ))}
       </div>

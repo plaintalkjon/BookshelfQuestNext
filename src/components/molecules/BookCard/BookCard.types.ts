@@ -4,5 +4,4 @@ export interface BookCardProps {
     book: Book;
     onClick?: () => void;
     href?: string;
-    variant?: "search" | "shelf" | "detailed";
   }

@@ -24,7 +24,6 @@ export function ShelfShowcase({ books }: ShelfShowcaseProps) {
               key={entry.book_isbn13}
               book={entry.book}
               href={`/books/${entry.book.isbn13}`}
-              detailed={true}
             />
           )
         ))}

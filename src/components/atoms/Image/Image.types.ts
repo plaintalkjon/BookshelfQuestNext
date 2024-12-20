@@ -7,6 +7,6 @@ export interface ImageProps {
   style?: React.CSSProperties;
   caption?: string;
   captionLink?: string;
-  variant?: "search" | "detailed" | "shelf";
+  variant: "small" | "medium" | "large";
   onLoad?: (e: SyntheticEvent<HTMLImageElement>) => void;
 }

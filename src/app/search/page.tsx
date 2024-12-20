@@ -10,5 +10,5 @@ export default async function SearchPage({
   const { q } = resolvedParams;
   const searchResults = await findAllBooks(q, 1);
   console.log('Initial books:', searchResults);
-  return <SearchShowcase query={q} initialBooks={searchResults} />;
+  return <SearchShowcase query={q} books={searchResults} />;
 }

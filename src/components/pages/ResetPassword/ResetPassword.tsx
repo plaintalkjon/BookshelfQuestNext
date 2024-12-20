@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { Button, Text } from '@/components';
 import { Form } from '@/components/molecules';
-import { useAuth } from '@/hooks/useAuth';
+import { useLogin } from '@/hooks/useLogin';
 import './ResetPassword.css';
 
 export const ResetPassword = () => {
   const router = useRouter();
-  const { resetPassword } = useAuth();
+    const { resetPassword } = useLogin();
 
   const fields = [
     { name: 'password', label: 'New Password', type: 'password', required: true },
