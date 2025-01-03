@@ -20,19 +20,6 @@ export const Home = ({ articles }: { articles: Article[] }) => {
       {user ? (
         // Logged-in view (Dashboard content)
         <>
-          <header className="dashboard-header">
-            <Text variant="h1">
-              Welcome back, {user?.display_name || "Reader"}
-            </Text>
-            <Text variant="body">Your reading journey continues</Text>
-          </header>
-
-          <div className="dashboard-grid">
-            <div className="dashboard-card">
-              <Text variant="h3">Currently Reading</Text>
-              <Text variant="body">0 books</Text>
-            </div>
-          </div>
 
           <ArticleShowcase title={"Newest Articles"} articles={articles} />
         </>

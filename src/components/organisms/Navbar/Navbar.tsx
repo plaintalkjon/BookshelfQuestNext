@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, Text } from "@/components/atoms";
-import { useUser } from "@/hooks/useUser";
 import { SearchBar } from "@/components/molecules";
+import { useAuth } from "@/hooks/useAuth";
 import { useLogin } from "@/hooks/useLogin";
 import { usePathname, useRouter } from "next/navigation";
 import "./Navbar.css";
@@ -11,7 +11,7 @@ import type { AppRoute } from "@/types/routes";
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { data: user, isLoading } = useUser();
+  const { isAuthenticated, user, isLoading } = useAuth();
   const { logout } = useLogin();
 
   const navItems: Array<{ label: string; path: AppRoute }> = [
@@ -65,7 +65,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-actions">
-        {isLoading ? null : user ? (
+        {isLoading ? null : isAuthenticated ? (
           <Button
             variant="secondary"
             size="small"
