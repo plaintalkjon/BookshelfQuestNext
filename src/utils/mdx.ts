@@ -8,27 +8,17 @@ import { Image } from '@/components/atoms';
 
 const articlesDirectory = path.join(process.cwd(), 'src/content/articles');
 
-const getSpacesUrl = (path: string) => 
-  `https://plaintalkpostuploads.nyc3.digitaloceanspaces.com/bookshelfquest/public${path}`;
-
 export async function getArticleBySlug(slug: string): Promise<MDXArticle | null> {
   try {
     const cleanSlug = slug.replace(/\.js\.map$/, '');
-    const fullPath = path.join(process.cwd(), 'src/content/articles', `${cleanSlug}.mdx`);
+    const fullPath = path.join(articlesDirectory, `${cleanSlug}.mdx`);
     
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-    const { frontmatter, content } = await compileMDX<{
-      title: string;
-      description: string;
-      date: string;
-      thumbnail: string;
-      images: string[];
-      slug?: string;
-    }>({
+    const { frontmatter, content } = await compileMDX({
       source: fileContents,
       components: {
-        Image: Image,
+        Image,
       },
       options: { 
         parseFrontmatter: true,
@@ -38,15 +28,8 @@ export async function getArticleBySlug(slug: string): Promise<MDXArticle | null>
       }
     });
 
-    // Transform image URLs
-    const transformedFrontmatter = {
-      ...frontmatter,
-      thumbnail: getSpacesUrl(frontmatter.thumbnail),
-      images: frontmatter.images?.map(getSpacesUrl)
-    };
-
     return {
-      metadata: { ...transformedFrontmatter, slug } as ArticleMeta,
+      metadata: { ...frontmatter, slug } as ArticleMeta,
       content
     };
   } catch (error) {
@@ -55,7 +38,6 @@ export async function getArticleBySlug(slug: string): Promise<MDXArticle | null>
   }
 }
 
-// src/utils/mdx.ts
 export async function getRecentArticles(count: number = 10): Promise<Article[]> {
   const files = fs.readdirSync(articlesDirectory);
   

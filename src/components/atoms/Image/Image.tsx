@@ -2,6 +2,7 @@ import NextImage from "next/image";
 import type { ImageProps } from "./Image.types";
 import "./Image.css";
 
+
 export function Image({
   src,
   alt,
@@ -10,7 +11,7 @@ export function Image({
   caption,
   captionLink,
 }: ImageProps) {
- 
+  
   const imageWidthAndHeight = {
     small: {
       width: 75,
@@ -33,7 +34,7 @@ export function Image({
       } ${className || ""}`}
     >
       <NextImage
-        src={src}
+        src={`https://plaintalkpostuploads.nyc3.digitaloceanspaces.com/bookshelfquest/public${src}`}
         alt={alt}
         width={variant ? imageWidthAndHeight[variant].width : imageWidthAndHeight.medium.width}
         height={variant ? imageWidthAndHeight[variant].height : imageWidthAndHeight.medium.height}
