@@ -8,9 +8,11 @@ import { Image } from '@/components/atoms';
 
 const articlesDirectory = path.join(process.cwd(), 'src/content/articles');
 
+const getSpacesUrl = (path: string) => 
+  `https://plaintalkpostuploads.nyc3.digitaloceanspaces.com/bookshelfquest/public${path}`;
+
 export async function getArticleBySlug(slug: string): Promise<MDXArticle | null> {
   try {
-    // Clean the slug first
     const cleanSlug = slug.replace(/\.js\.map$/, '');
     const fullPath = path.join(process.cwd(), 'src/content/articles', `${cleanSlug}.mdx`);
     
@@ -36,8 +38,15 @@ export async function getArticleBySlug(slug: string): Promise<MDXArticle | null>
       }
     });
 
+    // Transform image URLs
+    const transformedFrontmatter = {
+      ...frontmatter,
+      thumbnail: getSpacesUrl(frontmatter.thumbnail),
+      images: frontmatter.images?.map(getSpacesUrl)
+    };
+
     return {
-      metadata: { ...frontmatter, slug } as ArticleMeta,
+      metadata: { ...transformedFrontmatter, slug } as ArticleMeta,
       content
     };
   } catch (error) {

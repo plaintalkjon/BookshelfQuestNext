@@ -11,10 +11,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.isbndb.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plaintalkpostuploads.nyc3.digitaloceanspaces.com',
       }
     ],
     unoptimized: true,
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
