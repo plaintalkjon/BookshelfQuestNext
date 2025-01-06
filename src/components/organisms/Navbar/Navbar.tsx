@@ -3,6 +3,7 @@
 import { Button, Text } from "@/components/atoms";
 import { SearchBar } from "@/components/molecules";
 import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/hooks/useUser";
 import { useLogin } from "@/hooks/useLogin";
 import { usePathname, useRouter } from "next/navigation";
 import "./Navbar.css";
@@ -11,7 +12,8 @@ import type { AppRoute } from "@/types/routes";
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, user, isLoading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { data: userData, isLoading: userLoading } = useUser();
   const { logout } = useLogin();
 
   const navItems: Array<{ label: string; path: AppRoute }> = [
@@ -24,6 +26,14 @@ const Navbar = () => {
   const handleNavigation = (path: AppRoute) => {
     if (pathname !== path) {
       router.push(path);
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (isAuthenticated && userData?.username) {
+      router.push(`/profile/${userData.username}`);
+    } else {
+      router.push('/login');
     }
   };
 
@@ -51,13 +61,7 @@ const Navbar = () => {
           variant="body" 
           color="inverse" 
           className="nav-link" 
-          onClick={() => {
-            if (user?.username) {
-              handleNavigation(`/profile/${user.username}`);
-            } else {
-              handleNavigation('/login');
-            }
-          }}
+          onClick={handleProfileClick}
         >
           Profile
         </Text>
@@ -65,7 +69,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-actions">
-        {isLoading ? null : isAuthenticated ? (
+        {isLoading || userLoading ? null : isAuthenticated ? (
           <Button
             variant="secondary"
             size="small"
@@ -77,7 +81,7 @@ const Navbar = () => {
           <Button
             variant="secondary"
             size="small"
-            onClick={() => handleNavigation("/login")}
+            onClick={() => router.push("/login")}
           >
             Sign In
           </Button>
@@ -86,5 +90,6 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;
 

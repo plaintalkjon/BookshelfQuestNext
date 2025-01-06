@@ -1,8 +1,9 @@
-
 .image-container {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Optional: Add a subtle loading animation */
@@ -35,4 +36,6 @@
 
 .image-caption {
   text-align: center;
+  margin-top: 8px;
+  width: 100%;
 }
