@@ -38,7 +38,6 @@
   .article-content h4,
   .article-content h5,
   .article-content h6 {
-    margin-top: 2rem;
     margin-bottom: 1rem;
   }
 
@@ -58,6 +57,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     align-items: center;
+    margin-bottom: 2rem;
   }
 
   .side-by-side .image-wrapper {
@@ -81,4 +81,8 @@
     .side-by-side .image-wrapper {
       max-height: 400px;
     }
+  }
+
+h3 {
+    margin-top: 0rem;
   }

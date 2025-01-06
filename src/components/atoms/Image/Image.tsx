@@ -26,6 +26,18 @@ export function Image({
       width: 300,
       height: 400,
     },
+    width300height450: {
+      width: 300,
+      height: 450,
+    },
+    width300height400: {
+      width: 300,
+      height: 400,
+    },
+    width300height300: {
+      width: 300,
+      height: 300,
+    },
   };
 
   return (
