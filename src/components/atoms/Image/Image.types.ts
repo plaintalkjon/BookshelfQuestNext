@@ -8,5 +8,6 @@ export interface ImageProps {
   caption?: string;
   captionLink?: string;
   variant: "small" | "medium" | "large";
+  digitalOcean?: boolean;
   onLoad?: (e: SyntheticEvent<HTMLImageElement>) => void;
 }

@@ -10,6 +10,7 @@ export function Image({
   variant,
   caption,
   captionLink,
+  digitalOcean = false,
 }: ImageProps) {
   
   const imageWidthAndHeight = {
@@ -34,8 +35,8 @@ export function Image({
       } ${className || ""}`}
     >
       <NextImage
-        src={`https://plaintalkpostuploads.nyc3.digitaloceanspaces.com/bookshelfquest/public${src}`}
-        alt={alt}
+          src={digitalOcean ? `https://plaintalkpostuploads.nyc3.digitaloceanspaces.com/bookshelfquest/public${src}` : src}
+          alt={alt}
         width={variant ? imageWidthAndHeight[variant].width : imageWidthAndHeight.medium.width}
         height={variant ? imageWidthAndHeight[variant].height : imageWidthAndHeight.medium.height}
       />

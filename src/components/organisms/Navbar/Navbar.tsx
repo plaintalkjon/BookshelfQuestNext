@@ -13,7 +13,7 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { isAuthenticated, isLoading } = useAuth();
-  const { data: userData, isLoading: userLoading } = useUser();
+  const { isLoading: userLoading } = useUser();
   const { logout } = useLogin();
 
   const navItems: Array<{ label: string; path: AppRoute }> = [
@@ -29,13 +29,13 @@ const Navbar = () => {
     }
   };
 
-  const handleProfileClick = () => {
+  /*const handleProfileClick = () => {
     if (isAuthenticated && userData?.username) {
       router.push(`/profile/${userData.username}`);
     } else {
       router.push('/login');
     }
-  };
+  };*/
 
   return (
     <nav className="navbar">
@@ -57,14 +57,14 @@ const Navbar = () => {
             {item.label}
           </Text>
         ))}
-        <Text 
+        {/* <Text 
           variant="body" 
           color="inverse" 
           className="nav-link" 
           onClick={handleProfileClick}
         >
           Profile
-        </Text>
+        </Text> */}
         <SearchBar />
       </div>
 
